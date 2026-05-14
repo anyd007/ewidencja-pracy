@@ -1,0 +1,93 @@
+@import 'variables';
+
+.info-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.7); // Ciemne tło z przezroczystością
+  backdrop-filter: blur(5px);    // Rozmycie tego, co pod spodem (super efekt!)
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;                 // Najwyższa warstwa
+  padding: 20px;
+
+  .info-modal-card {
+    background: $white;
+    width: 100%;
+    max-width: 400px;
+    padding: 40px;
+    border-radius: 24px;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    animation: modalAppear 0.3s ease-out;
+
+    .modal-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+      color: $primary-dark;
+    }
+
+    p {
+      font-size: 1.2rem;
+      color: #555;
+      margin-bottom: 30px;
+      line-height: 1.5;
+    }
+
+    .modal-btn {
+      width: 100%;
+      padding: 15px;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      color: white;
+      transition: transform 0.2s;
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+
+    // Dynamiczne kolory w zależności od typu
+    &.success {
+      border-top: 10px solid $success-color;
+      .modal-btn { background-color: $success-color; }
+    }
+
+    &.error {
+      border-top: 10px solid $error; // Upewnij się, że masz $error w variables
+      .modal-btn { background-color: $error; }
+    }
+  }
+}
+
+// Prosta animacja "wskakiwania" modalu
+@keyframes modalAppear {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+// Responsive
+@media (max-width: $tablet) {
+  .info-modal-card {
+    padding: 30px 20px;
+    max-width: 320px;
+    
+    p { font-size: 1rem; }
+  }
+}

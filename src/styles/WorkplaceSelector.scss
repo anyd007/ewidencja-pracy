@@ -1,0 +1,127 @@
+@import 'variables';
+
+// Zakładam, że w variables masz zdefiniowany np. $success-color lub $tile-green
+// Jeśli nie, użyjemy tutaj koloru zielonego bezpośrednio:
+$green-site: #27ae60; 
+
+.workplace-selector {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+
+  header {
+    text-align: center;
+    margin-bottom: 40px;
+
+    h1 {
+      color: $primary-dark;
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #666;
+      font-size: 1.2rem;
+    }
+  }
+
+  // Korzystamy z tej samej siatki co w pracownikach dla spójności
+  .tiles-grid {
+    display: grid;
+    width: 100%;
+    grid-template-columns: repeat(4, 1fr); // Desktop: 4 kolumny
+    gap: 25px;
+
+    .workplace-tile {
+      background-color: $green-site;
+      color: $white;
+      border: none;
+      border-radius: 15px;
+      padding: 45px 20px;
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+
+      strong {
+        font-size: 1.5rem;
+        margin-bottom: 8px;
+        display: block;
+      }
+
+      span {
+        font-size: 0.9rem;
+        opacity: 0.9;
+        font-weight: normal;
+      }
+
+      &:hover {
+        transform: translateY(-8px);
+        background-color: darken($green-site, 8%);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+      }
+
+      &:active {
+        transform: scale(0.95);
+      }
+    }
+  }
+
+  .back-link {
+    margin-top: 50px;
+    background: transparent;
+    border: 1px solid #ccc;
+    padding: 10px 25px;
+    border-radius: 8px;
+    color: #666;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.2s;
+
+    &:hover {
+      background-color: #eee;
+      color: $primary-dark;
+    }
+  }
+
+  // --- TABLET ---
+  @media (max-width: $desktop) {
+    header h1 { font-size: 2rem; }
+    
+    .tiles-grid {
+      grid-template-columns: repeat(3, 1fr); // 3 kolumny
+      gap: 20px;
+    }
+  }
+
+  // --- MOBILE ---
+  @media (max-width: $tablet) {
+    padding: 20px 15px;
+
+    header {
+      margin-bottom: 25px;
+      h1 { font-size: 1.6rem; }
+      p { font-size: 1rem; }
+    }
+
+    .tiles-grid {
+      grid-template-columns: repeat(2, 1fr); // 2 kolumny na telefonie
+      gap: 12px;
+
+      .workplace-tile {
+        padding: 30px 10px;
+        
+        strong { font-size: 1.1rem; }
+        
+        &:hover { transform: none; } // Wyłączamy hover na dotyku
+      }
+    }
+  }
+}

@@ -1,0 +1,156 @@
+@import 'variables';
+
+.time-entry {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  header {
+    text-align: center;
+    margin-bottom: 35px;
+
+    h1 {
+      color: $primary-dark;
+      font-size: 2.2rem;
+      margin-bottom: 8px;
+    }
+
+    p {
+      color: $tile-blue;
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 5px 0;
+
+      span {
+        color: #666;
+        font-weight: normal;
+        display: block;
+        font-size: 1rem;
+        margin-top: 5px;
+      }
+    }
+  }
+
+  .entry-form {
+    background: $white;
+    width: 100%;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+
+    .input-group {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      label {
+        font-weight: bold;
+        color: $primary-dark;
+        font-size: 1rem;
+      }
+
+      input {
+        padding: 18px;
+        font-size: 1.3rem;
+        border: 2px solid #eee;
+        border-radius: 12px;
+        background: $bg-color;
+        color: $primary-dark;
+        font-family: inherit;
+        transition: border-color 0.2s;
+
+        &:focus {
+          outline: none;
+          border-color: $tile-blue;
+          background: $white;
+        }
+      }
+    }
+
+    .time-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .submit-btn {
+      margin-top: 15px;
+      padding: 20px;
+      font-size: 1.4rem;
+      font-weight: bold;
+      background-color: $success-color; // Twój zielony
+      color: $white;
+      border: none;
+      border-radius: 15px;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover {
+        background-color: darken($success-color, 10%);
+        transform: translateY(-2px);
+      }
+
+      &:active {
+        transform: scale(0.98);
+      }
+    }
+  }
+
+  .back-link {
+    margin-top: 30px;
+    background: transparent;
+    border: none;
+    color: #888;
+    text-decoration: underline;
+    font-size: 1rem;
+    cursor: pointer;
+
+    &:hover {
+      color: $primary-dark;
+    }
+  }
+
+  // --- TABLET ---
+  @media (max-width: $desktop) {
+    .entry-form {
+      padding: 30px;
+      
+      .input-group input {
+        padding: 15px;
+        font-size: 1.2rem;
+      }
+    }
+  }
+
+  // --- MOBILE ---
+  @media (max-width: $tablet) {
+    padding: 20px 15px;
+
+    header {
+      h1 { font-size: 1.8rem; }
+      p { font-size: 1.1rem; }
+    }
+
+    .entry-form {
+      padding: 20px;
+      gap: 20px;
+
+      .time-row {
+        grid-template-columns: 1fr; // Na komórce godziny jedna pod drugą dla wygody
+        gap: 20px;
+      }
+
+      .submit-btn {
+        padding: 15px;
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
