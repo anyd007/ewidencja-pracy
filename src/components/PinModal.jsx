@@ -13,8 +13,8 @@ const PinModal = ({ employee, pin, setPin, onCancel }) => {
   return (
     <div className="pin-modal">
       <div className="pin-content">
-        <h2>Enter PIN for {employee.firstName}</h2>
-        
+        <h2>Enter PIN for </h2>
+        <h3>{employee.firstName} {employee.lastName}</h3>
         <div className="pin-display">
           <div className="digit-slots">
             {[0, 1, 2, 3].map((i) => (
