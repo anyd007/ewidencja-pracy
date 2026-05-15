@@ -1,43 +1,56 @@
 @import "../styles/mixins";
 
+/* =========================
+   GŁÓWNY KONTAINER
+========================= */
 .employee-panel {
   min-height: 100vh;
   width: 100%;
-  background: #0f172a;
-  color: #fff;
+
+  background: #f5f7ff;
+
+  color: #1e293b;
 
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  padding: 24px;
-  gap: 20px;
+  padding: 40px 24px;
+  gap: 30px;
 
   @include mobile {
-    padding: 16px;
+    padding: 24px 16px;
   }
 }
 
-/* HEADER STEP */
+/* =========================
+   NAGŁÓWEK
+========================= */
 .employee-panel h1 {
-  font-size: 28px;
-  margin: 20px 0 10px 0;
-  font-weight: 700;
+  font-size: 32px;
+  font-weight: 800;
   text-align: center;
+  letter-spacing: -0.5px;
+
+  margin: 0;
+
+  color: #1e293b;
 
   @include mobile {
-    font-size: 22px;
+    font-size: 24px;
   }
 }
 
-/* GRID PRACOWNIKÓW */
+/* =========================
+   GRID
+========================= */
 .tiles-grid {
   width: 100%;
- 
+  max-width: 1100px;
 
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  gap: 22px;
 
   @include laptop {
     grid-template-columns: repeat(3, 1fr);
@@ -52,90 +65,73 @@
   }
 }
 
-/* KAFEL PRACOWNIKA */
+/* =========================
+   KAFEL PRACOWNIKA (SYSTEM STYLE)
+========================= */
 .employee-tile {
-  background: linear-gradient(
-    145deg,
-    rgba(255, 255, 255, 0.10),
-    rgba(255, 255, 255, 0.04)
-  );
+  background-image: linear-gradient(to right, #02AAB0 0%, #00CDAC 51%, #02AAB0 100%);
 
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
 
-  padding: 20px;
-  cursor: pointer;
+  padding: 26px 20px;
 
   color: #fff;
-  font-size: 16px;
-  font-weight: 600;
 
+  font-size: 25px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   gap: 6px;
 
-  transition: all 0.25s ease;
+  cursor: pointer;
+  transition: all 0.2s ease;
 
-  /* 🔥 KLUCZ: głębia */
-  box-shadow:
-    0 8px 20px rgba(0, 0, 0, 0.35),
-    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  /* system shadow */
+  box-shadow: 1px 2px 17px cadetblue;
 
   position: relative;
   overflow: hidden;
 
   &:hover {
-    transform: translateY(-6px);
-    border-color: rgba(59, 130, 246, 0.6);
+    transform: translateY(-4px);
+    border-color: rgba(124, 58, 237, 0.3);
 
     box-shadow:
-      0 15px 30px rgba(0, 0, 0, 0.5),
-      0 0 0 1px rgba(59, 130, 246, 0.25),
-      0 0 25px rgba(59, 130, 246, 0.15);
+      0 18px 40px rgba(15, 23, 42, 0.08),
+      0 0 0 3px rgba(124, 58, 237, 0.08);
   }
 
   &:active {
-    transform: translateY(-2px) scale(0.98);
-  }
-
-  /* 🔥 delikatny “shine effect” */
-  &::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(
-      circle,
-      rgba(255, 255, 255, 0.08),
-      transparent 60%
-    );
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-
-  &:hover::before {
-    opacity: 1;
+    transform: scale(0.98);
   }
 
   @include mobile {
-    padding: 22px;
-    font-size: 18px;
+    font-size: 20px;
+    padding: 28px 20px;
   }
 }
 
+/* nazwisko */
 .employee-tile span {
-  font-size: 13px;
-  opacity: 0.7;
+  font-size: 20px;
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-transform: uppercase;
 }
 
-/* LOADER OVERLAY */
+/* =========================
+   LOADER
+========================= */
 .employee-panel .loader {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(6px);
+
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(4px);
 
   display: flex;
   align-items: center;
@@ -144,24 +140,23 @@
   z-index: 999;
 }
 
-/* BACK BUTTON STYLE (jeśli używany w child komponentach) */
+/* =========================
+   BACK BUTTON
+========================= */
 .back-link {
   margin-top: 20px;
   background: transparent;
   border: none;
 
-  color: rgba(255, 255, 255, 0.6);
+  color: #64748b;
   cursor: pointer;
 
   font-size: 14px;
+  font-weight: 600;
+
+  transition: 0.2s;
 
   &:hover {
-    color: #fff;
+    color: #1e293b;
   }
 }
-
-/* STEP CONTAINER (dla WorkplaceSelector / TimeEntry) */
-// .employee-panel > div {
-//   width: 100%;
-//   max-width: 900px;
-// }

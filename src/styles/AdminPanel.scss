@@ -1,0 +1,19 @@
+@import "../styles/mixins";
+
+.admin-layout {
+  display: flex;
+  min-height: 100vh;
+
+  background: linear-gradient(135deg, #f1f5f9, #e2e8f0);
+  color: #0f172a;
+}
+
+/* CONTENT */
+.admin-content {
+  flex: 1;
+  padding: 28px;
+
+  @include mobile {
+    padding: 18px;
+  }
+}

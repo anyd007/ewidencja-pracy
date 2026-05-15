@@ -1,0 +1,96 @@
+@import "../styles/mixins";
+
+.admin-sidebar {
+  width: 260px;
+  min-height: 100vh;
+
+  background: #1e293b;
+  color: #fff;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 22px;
+  gap: 22px;
+
+  box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
+
+  @include mobile {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    width: 100%;
+    min-height: auto;
+
+    flex-direction: row;
+    justify-content: space-around;
+
+    padding: 10px 8px;
+    z-index: 999;
+  }
+}
+
+/* LOGO */
+.logo {
+  font-size: 20px;
+  font-weight: 800;
+
+  span {
+    color: #6366f1;
+  }
+
+  @include mobile {
+    display: none;
+  }
+}
+
+/* NAV */
+nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  @include mobile {
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+  }
+}
+
+/* LINKS */
+nav a {
+  text-decoration: none;
+  color: #cbd5e1;
+
+  padding: 10px 12px;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  transition: 0.2s ease;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+  }
+
+  &.active {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #fff;
+    box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+  }
+
+  @include mobile {
+    font-size: 11px;
+    padding: 8px;
+    flex-direction: column;
+    gap: 4px;
+  }
+}

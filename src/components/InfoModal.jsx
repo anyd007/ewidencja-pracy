@@ -10,10 +10,10 @@ const InfoModal = ({ message, type, onClose }) => {
         <div className="modal-icon">
           {type === 'success' ? '✅' : '❌'}
         </div>
-        <h2>{type === 'success' ? 'Success!' : 'Error'}</h2>
+        <h2>{type === 'success' ? 'Sukces' : 'Błąd'}</h2>
         <p>{message}</p>
         <button className="modal-btn" onClick={onClose}>
-          Understood
+          Zamknij
         </button>
       </div>
     </div>

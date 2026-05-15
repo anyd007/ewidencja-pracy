@@ -55,7 +55,7 @@ const EmployeePanel = () => {
         setStep("select-workplace");
         setPin("");
       } else {
-        setModalConfig({ message: "Wrong PIN! Try again.", type: "error" });
+        setModalConfig({ message: "Nieprawidłowy PIN!", type: "error" });
         setPin("");
       }
     }
@@ -96,13 +96,13 @@ const EmployeePanel = () => {
       await addDoc(collection(db, "timeEntries"), newEntry);
 
       setModalConfig({
-        message: `Work hours saved for ${selectedEmployee.firstName}!`,
+        message: `Czas pracy zapisany dla ${selectedEmployee.firstName}!`,
         type: "success",
       });
     } catch (error) {
       console.error("Error saving entry:", error);
       setModalConfig({
-        message: "Error saving data. Try again.",
+        message: "Błąd podczas zapisywania danych. Spróbuj ponownie.",
         type: "error",
       });
     } finally {

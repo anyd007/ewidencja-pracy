@@ -17,34 +17,32 @@ const AdminLogin = () => {
 
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
+const handleLogin = async (e) => {
+  e.preventDefault();
 
-    try {
-      await signInWithEmailAndPassword(auth, email, password);
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
 
-      setModalConfig({
-        message: "Login successful. Redirecting...",
-        type: "success"
-      });
+    setModalConfig({
+      message: "Logowanie udane! Przekierowywanie...",
+      type: "success"
+    });
 
-      setTimeout(() => {
-        navigate("/admin/dashboard");
-      }, 800);
+    navigate("/admin/dashboard");
 
-    } catch (error) {
-      setModalConfig({
-        message: "Invalid email or password",
-        type: "error"
-      });
-    }
-  };
+  } catch (error) {
+    setModalConfig({
+      message: "Nieprawidłowy email lub hasło",
+      type: "error"
+    });
+  }
+};
 
   return (
     <div className="admin-login">
 
       <div className="admin-login__card">
-        <h1 className="admin-login__title">Admin Panel</h1>
+        <h1 className="admin-login__title">Panel Administratora</h1>
         <p className="admin-login__subtitle">Dostęp tylko dla autoryzowanych użytkowników</p>
 
         <form className="admin-login__form" onSubmit={handleLogin}>
@@ -59,13 +57,13 @@ const AdminLogin = () => {
           <input
             className="admin-login__input"
             type="password"
-            placeholder="Password"
+            placeholder="Hasło"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
 
           <button className="admin-login__button" type="submit">
-            Login
+            Zaloguj się
           </button>
         </form>
       </div>
