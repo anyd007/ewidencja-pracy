@@ -17,14 +17,14 @@ const TimeEntry = ({ employee, workplace, onSubmit, onBack }) => {
   return (
     <div className="time-entry">
       <header>
-        <h1>Work Hours</h1>
+        <h1>Wprowadź czasy pracy</h1>
         <p>{employee.firstName} {employee.lastName}</p>
         <p>{workplace.name}</p>
       </header>
 
       <form onSubmit={handleSubmit} className="entry-form">
         <div className="input-group">
-          <label>Date</label>
+          <label>Data</label>
           <input 
             type="date" 
             value={date} 
@@ -35,7 +35,7 @@ const TimeEntry = ({ employee, workplace, onSubmit, onBack }) => {
 
         <div className="time-row">
           <div className="input-group">
-            <label>From</label>
+            <label>Od</label>
             <input 
               type="time" 
               value={startTime} 
@@ -44,7 +44,7 @@ const TimeEntry = ({ employee, workplace, onSubmit, onBack }) => {
             />
           </div>
           <div className="input-group">
-            <label>To</label>
+            <label>Do</label>
             <input 
               type="time" 
               value={endTime} 
@@ -54,10 +54,10 @@ const TimeEntry = ({ employee, workplace, onSubmit, onBack }) => {
           </div>
         </div>
 
-        <button type="submit" className="submit-btn">Save Log</button>
+        <button type="submit" className="submit-btn">Zapisz wpis</button>
       </form>
 
-      <button className="back-link" onClick={onBack}>← Change workplace</button>
+      <button className="back-link" onClick={onBack}>← Zmień miejsce pracy</button>
     </div>
   );
 };

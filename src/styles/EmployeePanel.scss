@@ -1,95 +1,167 @@
-@import 'variables';
+@import "../styles/mixins";
 
 .employee-panel {
   min-height: 100vh;
-  padding: 20px;
-  background-color: $bg-color;
+  width: 100%;
+  background: #0f172a;
+  color: #fff;
+
   display: flex;
   flex-direction: column;
   align-items: center;
 
-  h1 {
-    text-transform: uppercase;
-    font-family: 'Arial', sans-serif;
-    color: $primary-dark;
-    margin-bottom: 40px;
-    font-size: 2.5rem; // Duży napis na komputerze
-  }
+  padding: 24px;
+  gap: 20px;
 
-  .tiles-grid {
-    display: grid;
-    width: 100%;
-    max-width: 1200px;
-    // DESKTOP: 4 lub 5 kolumn
-    grid-template-columns: repeat(4, 1fr); 
-    gap: 25px;
-
-    .employee-tile {
-      background-color: $tile-blue;
-      color: $white;
-      border: none;
-      border-radius: 12px;
-      padding: 50px 20px;
-      font-size: 1.4rem;
-      font-weight: bold;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-
-      span {
-        display: block;
-        font-size: 1rem;
-        font-weight: normal;
-        margin-top: 10px;
-        opacity: 0.8;
-      }
-
-      &:hover {
-        transform: translateY(-10px);
-        background-color: darken($tile-blue, 10%);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-      }
-    }
-  }
-
-  // --- TABLET ---
-  @media (max-width: $desktop) {
-    padding: 30px;
-    
-    h1 { font-size: 2rem; }
-
-    .tiles-grid {
-      grid-template-columns: repeat(3, 1fr); // 3 kolumny
-      gap: 20px;
-    }
-  }
-
-  // --- TELEFON ---
-  @media (max-width: $tablet) {
-    padding: 15px;
-
-    h1 { 
-      font-size: 1.6rem; 
-      margin-bottom: 20px;
-    }
-
-    .tiles-grid {
-      grid-template-columns: repeat(2, 1fr); // 2 kolumny (wygodne dla kciuków)
-      gap: 12px;
-
-      .employee-tile {
-        padding: 35px 10px; // Mniejsze kafelki, by zmieściły się na ekranie
-        font-size: 1.1rem;
-        
-        // Na dotyku hover nie działa dobrze, więc go wyłączamy
-        &:hover {
-          transform: none;
-        }
-        
-        &:active {
-          transform: scale(0.95); // Efekt kliknięcia palcem
-        }
-      }
-    }
+  @include mobile {
+    padding: 16px;
   }
 }
+
+/* HEADER STEP */
+.employee-panel h1 {
+  font-size: 28px;
+  margin: 20px 0 10px 0;
+  font-weight: 700;
+  text-align: center;
+
+  @include mobile {
+    font-size: 22px;
+  }
+}
+
+/* GRID PRACOWNIKÓW */
+.tiles-grid {
+  width: 100%;
+ 
+
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+
+  @include laptop {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @include tablet {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include mobile {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* KAFEL PRACOWNIKA */
+.employee-tile {
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, 0.10),
+    rgba(255, 255, 255, 0.04)
+  );
+
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 16px;
+
+  padding: 20px;
+  cursor: pointer;
+
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  transition: all 0.25s ease;
+
+  /* 🔥 KLUCZ: głębia */
+  box-shadow:
+    0 8px 20px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-6px);
+    border-color: rgba(59, 130, 246, 0.6);
+
+    box-shadow:
+      0 15px 30px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(59, 130, 246, 0.25),
+      0 0 25px rgba(59, 130, 246, 0.15);
+  }
+
+  &:active {
+    transform: translateY(-2px) scale(0.98);
+  }
+
+  /* 🔥 delikatny “shine effect” */
+  &::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(
+      circle,
+      rgba(255, 255, 255, 0.08),
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+
+  @include mobile {
+    padding: 22px;
+    font-size: 18px;
+  }
+}
+
+.employee-tile span {
+  font-size: 13px;
+  opacity: 0.7;
+}
+
+/* LOADER OVERLAY */
+.employee-panel .loader {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(6px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 999;
+}
+
+/* BACK BUTTON STYLE (jeśli używany w child komponentach) */
+.back-link {
+  margin-top: 20px;
+  background: transparent;
+  border: none;
+
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+
+  font-size: 14px;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+/* STEP CONTAINER (dla WorkplaceSelector / TimeEntry) */
+// .employee-panel > div {
+//   width: 100%;
+//   max-width: 900px;
+// }

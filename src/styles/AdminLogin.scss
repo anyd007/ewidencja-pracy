@@ -1,0 +1,130 @@
+@import "../styles/mixins";
+
+.admin-login {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #0f172a;
+  padding: 20px;
+}
+
+.admin-login__card {
+  width: 100%;
+  max-width: 420px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  padding: 32px;
+  color: #fff;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  @include tablet {
+    max-width: 380px;
+    padding: 28px;
+  }
+
+  @include mobile {
+    max-width: 100%;
+    padding: 22px;
+    border-radius: 14px;
+  }
+}
+
+.admin-login__title {
+  font-size: 28px;
+  font-weight: 700;
+  margin: 0;
+
+  @include mobile {
+    font-size: 22px;
+    text-align: center;
+  }
+}
+
+.admin-login__subtitle {
+  font-size: 14px;
+  opacity: 0.7;
+  margin-top: -10px;
+
+  @include mobile {
+    text-align: center;
+    font-size: 13px;
+  }
+}
+
+.admin-login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.admin-login__input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.25);
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  transition: 0.2s ease;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+
+  &:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+
+  @include mobile {
+    padding: 14px;
+    font-size: 15px;
+  }
+}
+
+.admin-login__button {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 10px 20px rgba(37, 99, 235, 0.3);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @include mobile {
+    padding: 14px;
+    font-size: 15px;
+  }
+}
+
+.admin-login__footer {
+  text-align: center;
+  font-size: 12px;
+  opacity: 0.5;
+
+  @include mobile {
+    font-size: 11px;
+  }
+}

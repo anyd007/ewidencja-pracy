@@ -1,147 +1,170 @@
-@import 'variables';
+@import "../styles/mixins";
 
+/* OVERLAY */
 .pin-modal {
   position: fixed;
-  top: 0;
-  left: 0;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 9999;
+
+  animation: fadeIn 0.2s ease;
+}
+
+/* MODAL CARD */
+.pin-content {
   width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
+  max-width: 380px;
+
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+
+  padding: 28px;
+  color: #fff;
+  text-align: center;
+
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(14px);
+
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  animation: popIn 0.25s ease;
+
+  @include mobile {
+    max-width: 92%;
+    padding: 22px;
+  }
+}
+
+/* TITLE */
+.pin-content h2 {
+  font-size: 20px;
+  margin: 0;
+}
+
+.pin-content h3 {
+  font-size: 14px;
+  opacity: 0.7;
+  margin-top: -10px;
+}
+
+/* PIN DISPLAY */
+.pin-display {
   display: flex;
   justify-content: center;
+  margin-top: 10px;
+}
+
+.digit-slots {
+  display: flex;
+  gap: 12px;
+}
+
+.digit-slot {
+  width: 42px;
+  height: 52px;
+
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  display: flex;
   align-items: center;
-  z-index: 1000;
-  backdrop-filter: blur(5px);
+  justify-content: center;
 
-  .pin-content {
-    background: $white;
-    text-align: center;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
-    
-    // --- DESKTOP (Domyślnie) ---
-    width: 400px;
-    padding: 40px;
-    border-radius: 20px;
+  font-size: 22px;
+  font-weight: bold;
 
-    h2 {
-      color: $primary-dark;
-      margin-bottom: 15px;
-      font-size: 1.8rem;
-    }
+  background: rgba(0, 0, 0, 0.25);
+}
 
-    h3 {
-      color: $primary-dark;
-      margin-bottom: 10px;
-      font-size: 1.4rem;
-    }
+/* KEYPAD */
+.keypad {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
 
-    .digit-slots {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 30px;
+  margin-top: 10px;
+}
 
-      .digit-slot {
-        width: 60px;
-        height: 80px;
-        border: 2px solid $tile-blue;
-        border-radius: 10px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 2.2rem;
-        font-weight: bold;
-        color: $primary-dark;
-        background: $bg-color;
-      }
-    }
+/* KEYS */
+.keypad button {
+  padding: 16px;
 
-    .keypad {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 
-      button {
-        padding: 25px;
-        font-size: 1.6rem;
-        font-weight: bold;
-        border: none;
-        background: $bg-color;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.2s;
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
 
-        &:hover {
-          background: darken($bg-color, 5%);
-        }
+  font-size: 16px;
+  font-weight: 600;
 
-        &:active {
-          background: $tile-blue;
-          color: $white;
-          transform: scale(0.95);
-        }
-      }
-    }
+  cursor: pointer;
 
-    .close-btn {
-      margin-top: 30px;
-      width: 100%;
-      padding: 15px;
-      border: none;
-      background: $error;
-      color: $white;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+  transition: all 0.15s ease;
+
+  user-select: none;
+
+  &:hover {
+    background: rgba(59, 130, 246, 0.15);
+    border-color: rgba(59, 130, 246, 0.4);
+    transform: translateY(-2px);
   }
 
-  // --- TABLET ---
-  @media (max-width: $desktop) {
-    .pin-content {
-      width: 350px;
-      padding: 30px;
-
-      .digit-slots .digit-slot {
-        width: 50px;
-        height: 70px;
-        font-size: 1.8rem;
-      }
-
-      .keypad {
-        gap: 15px;
-        button { padding: 20px; }
-      }
-    }
+  &:active {
+    transform: scale(0.96);
   }
 
-  // --- MOBILE ---
-  @media (max-width: $tablet) {
-    .pin-content {
-      width: 90%; // Zajmuje prawie całą szerokość na telefonie
-      padding: 20px;
-      border-radius: 15px;
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+}
 
-      h2 { font-size: 1.4rem; }
+/* CANCEL BUTTON */
+.close-btn {
+  margin-top: 10px;
+  border-radius: 12px;
+  background: #27ae60;
+  border: none;
+  padding: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
 
-      .digit-slots {
-        gap: 10px;
-        .digit-slot {
-          width: 45px;
-          height: 60px;
-          font-size: 1.5rem;
-        }
-      }
+  cursor: pointer;
 
-      .keypad {
-        gap: 10px;
-        button { 
-          padding: 15px; 
-          font-size: 1.3rem;
-          
-          &:hover { transform: none; } // Wyłączamy hover na mobile
-        }
-      }
-    }
+  transition: 0.2s ease;
+
+  &:hover {
+    color: #fff;
+  }
+}
+
+/* ANIMATIONS */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.85);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
   }
 }

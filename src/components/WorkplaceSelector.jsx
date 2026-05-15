@@ -28,8 +28,8 @@ const WorkplaceSelector = ({ employee, onSelect, onBack }) => {
   return (
     <div className="workplace-selector">
       <header>
-        <h1>Welcome, {employee.firstName}!</h1>
-        <p>Select your workplace for today:</p>
+        <h1>Witaj, {employee.firstName}!</h1>
+        <p>Wybierz swoje miejsce pracy na dziś:</p>
       </header>
 
       <div className="tiles-grid">
@@ -46,7 +46,7 @@ const WorkplaceSelector = ({ employee, onSelect, onBack }) => {
       </div>
 
       <button className="back-link" onClick={onBack}>
-        ← Wrong person? Go back
+        ← To nie Ty? Wróć do wyboru pracownika
       </button>
     </div>
   );

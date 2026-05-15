@@ -1,5 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { db } from "../firebase";
+
+import {
+  collection,
+  query,
+  where,
+  onSnapshot,
+  addDoc,
+} from "firebase/firestore";
+
 import PinModal from "../components/PinModal";
 import WorkplaceSelector from "../components/WorkplaceSelector";
 import TimeEntry from "../components/TimeEntry";
@@ -12,7 +21,6 @@ const EmployeePanel = () => {
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Stany dla InfoModala
   const [modalConfig, setModalConfig] = useState({ message: "", type: "" });
 
   const [selectedEmployee, setSelectedEmployee] = useState(null);
@@ -20,24 +28,27 @@ const EmployeePanel = () => {
   const [pin, setPin] = useState("");
   const [step, setStep] = useState("select-employee");
 
-  // Pobieranie pracowników
+  // 🔥 Pobieranie pracowników (v9)
   useEffect(() => {
-    const unsubscribe = db
-      .collection("employees")
-      .where("isActive", "==", true)
-      .onSnapshot((snapshot) => {
-        const employeeList = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        setEmployees(employeeList);
-        setLoading(false);
-      });
+    const q = query(
+      collection(db, "employees"),
+      where("isActive", "==", true)
+    );
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const employeeList = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+
+      setEmployees(employeeList);
+      setLoading(false);
+    });
 
     return () => unsubscribe();
   }, []);
 
-  // Logika sprawdzania PIN
+  // 🔐 PIN check
   useEffect(() => {
     if (pin.length === 4 && selectedEmployee) {
       if (pin === selectedEmployee.pin) {
@@ -50,7 +61,7 @@ const EmployeePanel = () => {
     }
   }, [pin, selectedEmployee]);
 
-  // Zamknięcie modalu i ewentualny reset procesu
+  // 🔁 reset po modalu
   const closeInfoModal = () => {
     if (modalConfig.type === "success") {
       setStep("select-employee");
@@ -60,15 +71,18 @@ const EmployeePanel = () => {
     setModalConfig({ message: "", type: "" });
   };
 
+  // 🏗 wybór miejsca pracy
   const handleWorkplaceSelect = (workplace) => {
     setSelectedWorkplace(workplace);
     setStep("enter-time");
   };
 
+  // 💾 zapis czasu pracy (v9)
   const handleFinalLog = async (timeData) => {
-    setIsSubmitting(true); // Pokazujemy loader
+    setIsSubmitting(true);
+
     try {
-      const newLog = {
+      const newEntry = {
         employeeId: selectedEmployee.id,
         employeeName: `${selectedEmployee.firstName} ${selectedEmployee.lastName}`,
         workplaceId: selectedWorkplace.id,
@@ -79,34 +93,32 @@ const EmployeePanel = () => {
         createdAt: new Date(),
       };
 
-      await db.collection("logs").add(newLog);
-      
-      setModalConfig({ 
-        message: `Work hours saved for ${selectedEmployee.firstName}!`, 
-        type: "success" 
+      await addDoc(collection(db, "timeEntries"), newEntry);
+
+      setModalConfig({
+        message: `Work hours saved for ${selectedEmployee.firstName}!`,
+        type: "success",
       });
-      
     } catch (error) {
-      console.error("Error saving log:", error);
-      setModalConfig({ message: "Error saving data. Try again.", type: "error" });
+      console.error("Error saving entry:", error);
+      setModalConfig({
+        message: "Error saving data. Try again.",
+        type: "error",
+      });
     } finally {
-      setIsSubmitting(false); // Ukrywamy loader
+      setIsSubmitting(false);
     }
-
   };
-
 
   return (
     <div className="employee-panel">
-        {/* Loader przy starcie */}
       {loading && <Loader message="Fetching employees..." />}
-
-      {/* Loader przy zapisywaniu (blokuje ekran) */}
       {isSubmitting && <Loader message="Saving your time..." />}
-      {/* KROK 1: Wybór pracownika */}
+
+      {/* STEP 1 */}
       {step === "select-employee" && (
         <>
-          <h1>Select Your Name</h1>
+          <h1>Wybierz swoje dane:</h1>
           <div className="tiles-grid">
             {employees.map((emp) => (
               <button
@@ -122,10 +134,10 @@ const EmployeePanel = () => {
         </>
       )}
 
-      {/* KROK 2: Wybór budowy */}
+      {/* STEP 2 */}
       {step === "select-workplace" && (
-        <WorkplaceSelector 
-          employee={selectedEmployee} 
+        <WorkplaceSelector
+          employee={selectedEmployee}
           onSelect={handleWorkplaceSelect}
           onBack={() => {
             setStep("select-employee");
@@ -134,9 +146,9 @@ const EmployeePanel = () => {
         />
       )}
 
-      {/* KROK 3: Wybór daty i godzin */}
+      {/* STEP 3 */}
       {step === "enter-time" && (
-        <TimeEntry 
+        <TimeEntry
           employee={selectedEmployee}
           workplace={selectedWorkplace}
           onSubmit={handleFinalLog}
@@ -144,7 +156,7 @@ const EmployeePanel = () => {
         />
       )}
 
-      {/* MODAL PIN */}
+      {/* PIN MODAL */}
       {selectedEmployee && step === "select-employee" && (
         <PinModal
           employee={selectedEmployee}
@@ -157,11 +169,11 @@ const EmployeePanel = () => {
         />
       )}
 
-      {/* MODAL INFORMACYJNY (Sukces/Błąd) */}
-      <InfoModal 
-        message={modalConfig.message} 
-        type={modalConfig.type} 
-        onClose={closeInfoModal} 
+      {/* INFO MODAL */}
+      <InfoModal
+        message={modalConfig.message}
+        type={modalConfig.type}
+        onClose={closeInfoModal}
       />
     </div>
   );
