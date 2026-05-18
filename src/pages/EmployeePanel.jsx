@@ -112,8 +112,8 @@ const EmployeePanel = () => {
 
   return (
     <div className="employee-panel">
-      {loading && <Loader message="Fetching employees..." />}
-      {isSubmitting && <Loader message="Saving your time..." />}
+      {loading && <Loader message="Pobieranie danych..." />}
+      {isSubmitting && <Loader message="Zapisywanie czasu pracy..." />}
 
       {/* STEP 1 */}
       {step === "select-employee" && (

@@ -1,5 +1,5 @@
 import React from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 import AdminSidebar from "../components/AdminSidebar";
 import AdminDashboard from "./AdminDashboard";
@@ -13,13 +13,12 @@ import "../styles/AdminPanel.scss";
 const AdminPanel = () => {
   return (
     <div className="admin-layout">
-      
+
       <AdminSidebar />
 
       <div className="admin-content">
         <Routes>
-          <Route path="/" element={<Navigate to="dashboard" />} />
-          <Route path="dashboard" element={<AdminDashboard />} />
+          <Route index element={<AdminDashboard />} />
           <Route path="employees" element={<AdminEmployees />} />
           <Route path="workplaces" element={<AdminWorkplaces />} />
           <Route path="time" element={<AdminTimeEntries />} />

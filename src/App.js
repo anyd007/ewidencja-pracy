@@ -48,7 +48,6 @@ function App() {
   if (loading) {
     return <Loader message="Inicjalizacja aplikacji..." />;
   }
-  
 
   // 2. Jeśli user się zalogował, ale wciąż czekamy na pobranie roli z Firestore, blokujemy renderowanie tras
   if (user && role === null) {

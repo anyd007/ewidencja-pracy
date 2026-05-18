@@ -6,32 +6,30 @@ const AdminSidebar = () => {
   return (
     <aside className="admin-sidebar">
 
-      {/* LOGO */}
       <div className="logo">
         Ewidencja<span>Pracy</span>
       </div>
 
-      {/* NAWIGACJA */}
       <nav>
-        <NavLink to="/admin/dashboard" end>
-          📊 Panel główny
-        </NavLink>
+       <NavLink to="/admin/dashboard" end>
+  📊 Panel główny
+</NavLink>
 
-        <NavLink to="/admin/employees">
-          👷 Pracownicy
-        </NavLink>
+<NavLink to="/admin/dashboard/employees">
+  👷 Pracownicy
+</NavLink>
 
-        <NavLink to="/admin/workplaces">
-          🏗 Miejsca pracy
-        </NavLink>
+<NavLink to="/admin/dashboard/workplaces">
+  🏗 Miejsca pracy
+</NavLink>
 
-        <NavLink to="/admin/time">
-          ⏱ Ewidencja czasu
-        </NavLink>
+<NavLink to="/admin/dashboard/time">
+  ⏱ Ewidencja czasu
+</NavLink>
 
-        <NavLink to="/admin/settings">
-          ⚙ Ustawienia
-        </NavLink>
+<NavLink to="/admin/dashboard/settings">
+  ⚙ Ustawienia
+</NavLink>
       </nav>
 
     </aside>
