@@ -84,7 +84,8 @@ const EmployeePanel = () => {
     try {
       const newEntry = {
         employeeId: selectedEmployee.id,
-        employeeName: `${selectedEmployee.firstName} ${selectedEmployee.lastName}`,
+        firstName: `${selectedEmployee.firstName}`,
+        lastName: `${selectedEmployee.lastName}`,
         workplaceId: selectedWorkplace.id,
         workplaceName: selectedWorkplace.name,
         date: timeData.date,

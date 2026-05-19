@@ -1,14 +1,10 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import { db } from "../firebase";
-import {
-  collection,
-  query,
-  where,
-  onSnapshot,
-} from "firebase/firestore";
+import { collection, query, where, onSnapshot } from "firebase/firestore";
 import "../styles/AdminEmployees.scss";
 import Loader from "../components/Loader";
+import EmployeeInfo from "./EmployeeDetails/EmployeeInfo";
 
 const AdminEmployees = () => {
   const [employees, setEmployees] = useState([]);
@@ -42,10 +38,10 @@ const AdminEmployees = () => {
     return () => unsubscribe();
   }, []);
 
-  const handleEmplyeeChoose = (employee) => {
-    setSelectedEmployee(employee);
-  };
-  console.log(selectedEmployee);
+  const handleEmployeeChoose = (employee) => {
+   setSelectedEmployee(employee);
+    };
+
   return (
     <div className="admin-employees">
       {loading && <Loader message="Pobieranie listy pracowników..." />}
@@ -58,13 +54,15 @@ const AdminEmployees = () => {
             <button
               key={emp.id}
               className="employee-tile"
-              onClick={() => handleEmplyeeChoose(emp)}
+              onClick={() => handleEmployeeChoose(emp)}
             >
               {emp.firstName} {emp.lastName}
             </button>
           ))}
         </div>
       )}
+
+      {selectedEmployee && <EmployeeInfo employee={selectedEmployee} />}
     </div>
   );
 };

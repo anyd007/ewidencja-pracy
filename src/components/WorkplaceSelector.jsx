@@ -23,7 +23,7 @@ const WorkplaceSelector = ({ employee, onSelect, onBack }) => {
     return () => unsubscribe();
   }, []);
 
-  if (loading) return <Loader message="Loading sites..." />;
+  if (loading) return <Loader message="Wczytywanie strony..." />;
 
   return (
     <div className="workplace-selector">

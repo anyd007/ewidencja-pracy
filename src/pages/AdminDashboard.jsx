@@ -142,7 +142,7 @@ const AdminDashboard = () => {
               .map((e) => (
                 <div key={e.id} className="list-item">
                   <div className="left">
-                    <strong>{e.employeeName}</strong>
+                    <strong>{e.firstName} {e.lastName}</strong>
                     <span>{e.workplaceName}</span>
                   </div>
 
