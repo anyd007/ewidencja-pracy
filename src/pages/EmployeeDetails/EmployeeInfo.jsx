@@ -18,7 +18,7 @@ const EmployeeInfo = ({ employee }) => {
 
     const q = query(
       collection(db, "timeEntries"),
-      where("employeeId", "==", employee.id)
+      where("employeeId", "==", employee.id),
     );
 
     const unsubscribe = onSnapshot(
@@ -35,7 +35,7 @@ const EmployeeInfo = ({ employee }) => {
       (err) => {
         console.error("Błąd pobierania danych:", err);
         setLoading(false);
-      }
+      },
     );
 
     return () => unsubscribe();
@@ -55,70 +55,67 @@ const EmployeeInfo = ({ employee }) => {
     }
 
     // sortowanie (najnowsze na górze)
-    return result.sort(
-      (a, b) => new Date(b.date) - new Date(a.date)
-    );
+    return result.sort((a, b) => new Date(b.date) - new Date(a.date));
   }, [details, from, to]);
 
   const hasData = filteredDetails.length > 0;
 
- return (
-  <div className="details">
-    {loading && (
-      <Loader message="Pobieranie danych pracownika..." />
-    )}
+  return (
+    <div className="details">
+      {loading && <Loader message="Pobieranie danych pracownika..." />}
 
-    <h2>Informacje o pracowniku</h2>
+      <h2>Informacje o pracowniku</h2>
 
-    <h3>
-      {employee.firstName} {employee.lastName}
-    </h3>
+      <h3>
+        {employee.firstName} {employee.lastName}
+      </h3>
 
-    {/* FILTRY ZAWSZE WIDOCZNE */}
-    <div className="filters">
-      <input
-        type="date"
-        value={from}
-        onChange={(e) => setFrom(e.target.value)}
-      />
+      {/* FILTRY ZAWSZE WIDOCZNE */}
+      <div className="filters">
+        <input
+          type="date"
+          value={from}
+          onChange={(e) => setFrom(e.target.value)}
+        />
 
-      <input
-        type="date"
-        value={to}
-        onChange={(e) => setTo(e.target.value)}
-      />
-    </div>
+        <input 
+        type="date" 
+        value={to} 
+        onChange={(e) => setTo(e.target.value)} />
+      </div>
 
-    {/* STANY DANYCH */}
-    {!loading && details.length === 0 ? (
-      <p>Brak danych do wyświetlenia</p>
-    ) : !loading && !hasData ? (
-      <h3>Brak danych w wybranym zakresie</h3>
-    ) : (
-      <table>
-        <thead>
-          <tr>
-            <th>Data</th>
-            <th>Start</th>
-            <th>Koniec</th>
-            <th>Miejsce pracy</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {filteredDetails.map((detail) => (
-            <tr key={detail.id}>
-              <td>{detail.date}</td>
-              <td>{detail.startTime}</td>
-              <td>{detail.endTime}</td>
-              <td>{detail.workplaceName}</td>
+      {/* STANY DANYCH */}
+      {!loading && details.length === 0 ? (
+        <p>Brak danych do wyświetlenia</p>
+      ) : !loading && !hasData ? (
+        <h3>Brak danych w wybranym zakresie</h3>
+      ) : (
+        <div className="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Miejsce pracy</th>
+              <th>Data</th>
+              <th>Start</th>
+              <th>Koniec</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    )}
-  </div>
-);
+          </thead>
+
+          <tbody>
+            {filteredDetails.map((detail) => (
+              <tr key={detail.id}>
+                <td>{detail.workplaceName}</td>
+                <td>{detail.date}</td>
+                <td>{detail.startTime}</td>
+                <td>{detail.endTime}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        </div>
+      )}
+    </div>
+  );
 };
 
 export default EmployeeInfo;
