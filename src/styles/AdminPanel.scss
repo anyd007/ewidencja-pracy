@@ -15,6 +15,6 @@
   padding: 28px 10px;
 
   @include tablet {
-    padding-top: var(--topbar-height);
+    padding: 5px;
   }
 }
