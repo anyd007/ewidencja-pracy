@@ -17,6 +17,28 @@
 
             .filters-input {
                 max-width: 200px;
+                padding: 12px 14px;
+                border-radius: 12px;
+                border: 1px solid #e2e8f0;
+                background: #f8fafc;
+                color: #0f172a;
+                font-size: 14px;
+                outline: none;
+                transition: 0.2s ease;
+            }
+        }
+
+        .filters-pleace {
+
+            .filter-pleace-select {
+                padding: 12px 14px;
+                border-radius: 12px;
+                border: 1px solid #e2e8f0;
+                background: #f8fafc;
+                color: #0f172a;
+                font-size: 14px;
+                outline: none;
+                transition: 0.2s ease;
             }
         }
     }
@@ -26,7 +48,7 @@
         // backdrop-filter: blur(10px);
         border-radius: 16px;
         overflow: hidden;
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        // box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         border: 1px solid rgba(255, 255, 255, 0.1);
 
         table {

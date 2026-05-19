@@ -1,38 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "../styles/AdminSidebar.scss";
 
 const AdminSidebar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
-    <aside className="admin-sidebar">
+    <>
+      {/* BURGER */}
+      <button className="burger" onClick={toggleMenu}>
+        ☰
+      </button>
 
-      <div className="logo">
-        Ewidencja<span>Pracy</span>
-      </div>
+      {/* OVERLAY */}
+      <div
+        className={`sidebar-overlay ${isOpen ? "show" : ""}`}
+        onClick={toggleMenu}
+      />
 
-      <nav>
-       <NavLink to="/admin/dashboard" end>
-  📊 Panel główny
-</NavLink>
+      {/* SIDEBAR */}
+      <aside className={`admin-sidebar ${isOpen ? "open" : ""}`}>
+        <div className="logo">
+          Ewidencja<span>Pracy</span>
+        </div>
 
-<NavLink to="/admin/dashboard/employees">
-  👷 Pracownicy
-</NavLink>
+        <nav>
+          <NavLink to="/admin/dashboard" end onClick={toggleMenu}>
+            📊 <span className="link-name">Panel główny</span>
+          </NavLink>
 
-<NavLink to="/admin/dashboard/workplaces">
-  🏗 Miejsca pracy
-</NavLink>
+          <NavLink to="/admin/dashboard/employees" onClick={toggleMenu}>
+            👷 <span className="link-name">Pracownicy</span>
+          </NavLink>
 
-<NavLink to="/admin/dashboard/time">
-  ⏱ Ewidencja czasu
-</NavLink>
+          <NavLink to="/admin/dashboard/workplaces" onClick={toggleMenu}>
+            🏗 <span className="link-name">Miejsca pracy</span>
+          </NavLink>
 
-<NavLink to="/admin/dashboard/settings">
-  ⚙ Ustawienia
-</NavLink>
-      </nav>
+          <NavLink to="/admin/dashboard/time" onClick={toggleMenu}>
+            ⏱ <span className="link-name">Ewidencja czasu</span>
+          </NavLink>
 
-    </aside>
+          <NavLink to="/admin/dashboard/settings" onClick={toggleMenu}>
+            ⚙ <span className="link-name">Ustawienia</span>
+          </NavLink>
+        </nav>
+      </aside>
+    </>
   );
 };
 

@@ -1,4 +1,5 @@
 @import "../styles/mixins";
+@import "../styles/variables";
 
 .admin-layout {
   display: flex;
@@ -11,9 +12,9 @@
 /* CONTENT */
 .admin-content {
   flex: 1;
-  padding: 28px;
+  padding: 28px 10px;
 
-  @include mobile {
-    padding: 18px;
+  @include tablet {
+    padding-top: var(--topbar-height);
   }
 }

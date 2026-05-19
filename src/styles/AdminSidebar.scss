@@ -1,4 +1,9 @@
 @import "../styles/mixins";
+@import "../styles/variables";
+
+/* =========================
+   BASE SIDEBAR
+========================= */
 
 .admin-sidebar {
   width: 260px;
@@ -15,24 +20,14 @@
 
   box-shadow: 10px 0 30px rgba(0, 0, 0, 0.15);
 
-  @include mobile {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-
-    width: 100%;
-    min-height: auto;
-
-    flex-direction: row;
-    justify-content: space-around;
-
-    padding: 10px 8px;
-    z-index: 999;
-  }
+  transition: transform 0.3s ease;
+  z-index: 1002;
 }
 
-/* LOGO */
+/* =========================
+   LOGO
+========================= */
+
 .logo {
   font-size: 20px;
   font-weight: 800;
@@ -40,26 +35,22 @@
   span {
     color: #6366f1;
   }
-
-  @include mobile {
-    display: none;
-  }
 }
 
-/* NAV */
+/* =========================
+   NAV
+========================= */
+
 nav {
   display: flex;
   flex-direction: column;
   gap: 10px;
-
-  @include mobile {
-    flex-direction: row;
-    width: 100%;
-    justify-content: space-around;
-  }
 }
 
-/* LINKS */
+/* =========================
+   LINKS
+========================= */
+
 nav a {
   text-decoration: none;
   color: #cbd5e1;
@@ -87,10 +78,80 @@ nav a {
     box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
   }
 
-  @include mobile {
-    font-size: 11px;
-    padding: 8px;
-    flex-direction: column;
-    gap: 4px;
+  .link-name {
+    display: inline;
+  }
+}
+
+/* =========================
+   BURGER
+========================= */
+
+.burger {
+  position: fixed;
+   top: calc(12px + env(safe-area-inset-top));
+  left: calc(12px + env(safe-area-inset-left));
+
+  z-index: 1100;
+
+  background: #1e293b;
+  color: #fff;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: 24px;
+  padding: 6px 10px;
+
+  cursor: pointer;
+}
+
+@media (min-width: 769px) {
+  .burger {
+    display: none;
+  }
+}
+
+/* =========================
+   OVERLAY
+========================= */
+
+.sidebar-overlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0, 0, 0, 0.45);
+
+  opacity: 0;
+  pointer-events: none;
+
+  transition: opacity 0.25s ease;
+
+  z-index: 1001;
+}
+
+.sidebar-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* =========================
+   MOBILE SLIDE MENU
+========================= */
+
+@media (max-width: 768px) {
+  .admin-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    height: 100vh;
+    width: 260px;
+
+    transform: translateX(-100%);
+  }
+
+  .admin-sidebar.open {
+    transform: translateX(0);
   }
 }

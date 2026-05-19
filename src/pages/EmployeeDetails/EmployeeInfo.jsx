@@ -111,6 +111,7 @@ const EmployeeInfo = ({ employee }) => {
         <div className="filters-pleace">
           <label>miejsce pracy</label><br />
           <select
+            className="filter-pleace-select"
             value={selectedWorkplace}
             onChange={(e) => setSelectedWorkplace(e.target.value)}
           >
