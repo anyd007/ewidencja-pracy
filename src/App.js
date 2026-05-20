@@ -53,7 +53,7 @@ function App() {
   if (user && role === null) {
     return <Loader message="Sprawdzanie uprawnień..." />;
   }
-
+  
   return (
     <Router>
       <div className="app-container">
@@ -70,7 +70,7 @@ function App() {
               user && (role === "owner" || role === "admin") ? (
                 <Navigate to="/admin/dashboard/*" replace />
               ) : (
-                <AdminLogin />
+                <AdminLogin/>
               )
             } 
           />
@@ -80,7 +80,7 @@ function App() {
             path="/admin/dashboard/*"
             element={
               user && (role === "owner" || role === "admin") ? (
-                <AdminPanel />
+                <AdminPanel user={user}/>
               ) : (
                 <Navigate to="/admin" replace />
               )

@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 
@@ -12,27 +15,51 @@ const AdminLogin = () => {
 
   const [modalConfig, setModalConfig] = useState({
     message: "",
-    type: ""
+    type: "",
   });
 
   const navigate = useNavigate();
 
-const handleLogin = async (e) => {
-  e.preventDefault();
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+
+      setModalConfig({
+        message: "Logowanie udane! Przekierowywanie...",
+        type: "success",
+      });
+
+      navigate("/admin/dashboard");
+    } catch (error) {
+      setModalConfig({
+        message: "Nieprawidłowy email lub hasło",
+        type: "error",
+      });
+    }
+  };
+
+  const handleResetPassword = async () => {
+  if (!email) {
+    setModalConfig({
+      message: "W polu Email podaj swój mail do logowania, aby zresetować hasło.",
+      type: "error"
+    });
+    return;
+  }
 
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    await sendPasswordResetEmail(auth, email);
 
     setModalConfig({
-      message: "Logowanie udane! Przekierowywanie...",
+      message: "Wysłano link do resetu hasła na podany email.",
       type: "success"
     });
 
-    navigate("/admin/dashboard");
-
   } catch (error) {
     setModalConfig({
-      message: "Nieprawidłowy email lub hasło",
+      message: "Nie udało się wysłać maila resetującego.",
       type: "error"
     });
   }
@@ -40,10 +67,11 @@ const handleLogin = async (e) => {
 
   return (
     <div className="admin-login">
-
       <div className="admin-login__card">
         <h1 className="admin-login__title">Panel Administratora</h1>
-        <p className="admin-login__subtitle">Dostęp tylko dla autoryzowanych użytkowników</p>
+        <p className="admin-login__subtitle">
+          Dostęp tylko dla autoryzowanych użytkowników
+        </p>
 
         <form className="admin-login__form" onSubmit={handleLogin}>
           <input
@@ -61,7 +89,13 @@ const handleLogin = async (e) => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-
+          <button
+            type="button"
+            className="admin-login__forgot"
+            onClick={handleResetPassword}
+          >
+            Nie pamiętam hasła
+          </button>
           <button className="admin-login__button" type="submit">
             Zaloguj się
           </button>
@@ -73,7 +107,6 @@ const handleLogin = async (e) => {
         type={modalConfig.type}
         onClose={() => setModalConfig({ message: "", type: "" })}
       />
-
     </div>
   );
 };

@@ -10,7 +10,9 @@ import AdminSettings from "./AdminSettings";
 
 import "../styles/AdminPanel.scss";
 
-const AdminPanel = () => {
+const AdminPanel = ({ user }) => {
+
+  
   return (
     <div className="admin-layout">
 
@@ -22,7 +24,7 @@ const AdminPanel = () => {
           <Route path="employees" element={<AdminEmployees />} />
           <Route path="workplaces" element={<AdminWorkplaces />} />
           <Route path="time" element={<AdminTimeEntries />} />
-          <Route path="settings" element={<AdminSettings />} />
+          <Route path="settings" element={<AdminSettings user={user}/>} />
         </Routes>
       </div>
 
