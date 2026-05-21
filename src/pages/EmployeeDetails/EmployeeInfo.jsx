@@ -1,9 +1,9 @@
 
+
 import "../../styles/EmployeeInfo.scss";
 
 const EmployeeInfo = ({ employee }) => {
 
-console.log(employee);
   return (
     <div className="details">
   <div className="details-card">

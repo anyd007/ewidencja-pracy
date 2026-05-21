@@ -1,0 +1,230 @@
+@import "../styles/mixins";
+@import "../styles/variables";
+
+@import "../styles/mixins";
+
+/* =========================
+   WRAPPER
+========================= */
+.employee-add {
+  width: 100%;
+  max-width: 700px;
+
+  margin: 0 auto;
+  padding: 32px;
+
+  background: #ffffff;
+  border-radius: 20px;
+
+  box-shadow:
+    0 20px 50px rgba(15, 23, 42, 0.08),
+    0 2px 10px rgba(15, 23, 42, 0.04);
+
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+
+  @include tablet {
+    padding: 26px;
+  }
+
+  @include mobile {
+    padding: 20px;
+    border-radius: 16px;
+    gap: 22px;
+  }
+}
+
+/* =========================
+   HEADER
+========================= */
+.employee-add h2 {
+  margin: 0;
+
+  font-size: 28px;
+  font-weight: 700;
+
+  color: #1e293b;
+  letter-spacing: -0.5px;
+
+  @include mobile {
+    font-size: 22px;
+    text-align: center;
+  }
+}
+
+/* =========================
+   BACK BUTTON
+========================= */
+.employee-add > button {
+  align-self: flex-start;
+
+  padding: 10px 16px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #eef2ff;
+  color: #5b21b6;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    background: #ddd6fe;
+    transform: translateY(-1px);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  @include mobile {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* =========================
+   FORM
+========================= */
+.employee-add-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+
+  @include mobile {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+}
+
+/* =========================
+   FIELD
+========================= */
+.employee-add-wrapper > div {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* =========================
+   LABEL
+========================= */
+.employee-add-wrapper label {
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #64748b;
+
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+/* =========================
+   INPUT
+========================= */
+.employee-add-wrapper input {
+  width: 100%;
+
+  padding: 14px 16px;
+
+  border-radius: 14px;
+  border: 1px solid #e2e8f0;
+
+  background: #f8fafc;
+  color: #1e293b;
+
+  font-size: 15px;
+  font-weight: 500;
+
+  outline: none;
+
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &::placeholder {
+    color: #94a3b8;
+    font-weight: 400;
+  }
+
+  &:focus {
+    background: #ffffff;
+    border-color: #7c3aed;
+
+    box-shadow:
+      0 0 0 4px rgba(124, 58, 237, 0.12);
+  }
+
+  @include mobile {
+    padding: 15px;
+    font-size: 16px;
+  }
+}
+
+/* =========================
+   FULL WIDTH FIELD
+========================= */
+.employee-add-wrapper__phone {
+  grid-column: span 2;
+
+  @include mobile {
+    grid-column: span 1;
+  }
+}
+
+/* =========================
+   SUBMIT BUTTON (na przyszłość)
+========================= */
+.employee-add-submit {
+  margin-top: 10px;
+
+  width: 100%;
+  padding: 15px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: linear-gradient(
+    135deg,
+    #7c3aed,
+    #6d28d9
+  );
+
+  color: #ffffff;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  box-shadow:
+    0 12px 30px rgba(124, 58, 237, 0.25);
+
+  &:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+      0 18px 40px rgba(124, 58, 237, 0.35);
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  @include mobile {
+    padding: 16px;
+  }
+}

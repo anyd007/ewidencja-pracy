@@ -16,4 +16,19 @@
         padding: 0;
 
     }
+
+    .add-employee-btn{
+        background: linear-gradient(135deg, #6366f1, #4f46e5);
+        color: #fff;
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+        text-decoration: none;
+        text-transform: uppercase;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: none;
+        font-size: 14px;
+        font-weight: 500;
+        transition: 0.2s ease;
+        cursor: pointer;
+    }
 }

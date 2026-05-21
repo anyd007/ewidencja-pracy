@@ -4,11 +4,13 @@ import { db } from "../firebase";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 import "../styles/AdminEmployees.scss";
 import Loader from "../components/Loader";
+import EmployeeAdd from "./EmployeeDetails/EmployeeAdd";
 import EmployeeInfo from "./EmployeeDetails/EmployeeInfo";
 
 const AdminEmployees = () => {
   const [employees, setEmployees] = useState([]);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
+  const [employeeAdd, setEmployeeAdd] = useState(false);
   const [loading, setLoading] = useState(true);
 
   // 🔥 Pobieranie pracowników (v9)
@@ -39,30 +41,49 @@ const AdminEmployees = () => {
   }, []);
 
   const handleEmployeeChoose = (employee) => {
-   setSelectedEmployee(employee);
-    };
+    setSelectedEmployee(employee);
+  };
 
   return (
     <div className="admin-employees">
       {loading && <Loader message="Pobieranie listy pracowników..." />}
-      <h2>Wszyscy pracownicy</h2>
-      {!employees.length ? (
-        <h3>brak dodanych pracowników</h3>
-      ) : (
-        <div className="employees-list">
-          {employees.map((emp, index) => (
-            <button
-              key={emp.id}
-              className="employee-tile"
-              onClick={() => handleEmployeeChoose(emp)}
-            >
-              {emp.firstName} {emp.lastName}
-            </button>
-          ))}
-        </div>
-      )}
 
-      {selectedEmployee && <EmployeeInfo employee={selectedEmployee} />}
+      {!loading && (
+        <>
+          {employeeAdd ? (
+            <EmployeeAdd setEmployeeAdd={setEmployeeAdd} />
+          ) : (
+            <>
+              <h2>Wszyscy pracownicy</h2>
+
+              {!employees.length ? (
+                <h3>Brak dodanych pracowników</h3>
+              ) : (
+                <div className="employees-list">
+                  {employees.map((emp) => (
+                    <button
+                      key={emp.id}
+                      className="employee-tile"
+                      onClick={() => handleEmployeeChoose(emp)}
+                    >
+                      {emp.firstName} {emp.lastName}
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              <button
+                onClick={() => setEmployeeAdd(true)}
+                className="add-employee-btn"
+              >
+                Dodaj pracownika
+              </button>
+
+              {selectedEmployee && <EmployeeInfo employee={selectedEmployee} />}
+            </>
+          )}
+        </>
+      )}
     </div>
   );
 };
