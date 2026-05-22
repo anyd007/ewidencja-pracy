@@ -5,7 +5,8 @@ import { collection, query, where, onSnapshot } from "firebase/firestore";
 import "../styles/AdminEmployees.scss";
 import Loader from "../components/Loader";
 import EmployeeAdd from "./EmployeeDetails/EmployeeAdd";
-import EmployeeInfo from "./EmployeeDetails/EmployeeInfo";
+import EmployeeDetailsModal from "../components/EmployeeDetailsModal";
+import WorkerImg from "../assets/worker-img.png"
 
 const AdminEmployees = () => {
   const [employees, setEmployees] = useState([]);
@@ -54,32 +55,53 @@ const AdminEmployees = () => {
             <EmployeeAdd setEmployeeAdd={setEmployeeAdd} />
           ) : (
             <>
-              <h2>Wszyscy pracownicy</h2>
+              <h1 className="admin-employees__title">Wszyscy pracownicy</h1>
 
-              {!employees.length ? (
-                <h3>Brak dodanych pracowników</h3>
-              ) : (
-                <div className="employees-list">
-                  {employees.map((emp) => (
-                    <button
-                      key={emp.id}
-                      className="employee-tile"
-                      onClick={() => handleEmployeeChoose(emp)}
-                    >
-                      {emp.firstName} {emp.lastName}
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              <button
+                <button
                 onClick={() => setEmployeeAdd(true)}
                 className="add-employee-btn"
               >
                 Dodaj pracownika
               </button>
 
-              {selectedEmployee && <EmployeeInfo employee={selectedEmployee} />}
+              {!employees.length ? (
+                <h3>Brak dodanych pracowników</h3>
+              ) : (
+                <div className="employees-list">
+                  {employees.map((emp) => (
+                    <div key={emp.id} className="employee-card">
+                      <div className="employee-card__top">
+                        <div className="employee-card__logo">
+                          Remont<span>ER</span>
+                        </div>
+                      </div>
+
+                      <div className="employee-card__image-wrapper">
+                        <img
+                          src={emp.photo || WorkerImg}
+                          alt={`${emp.firstName} ${emp.lastName}`}
+                          className="employee-card__image"
+                        />
+                      </div>
+
+                      <div className="employee-card__content">
+                        <h3 className="employee-card__name">
+                          {emp.firstName} {emp.lastName}
+                        </h3>
+
+                        <button
+                          className="employee-card__button"
+                          onClick={() => handleEmployeeChoose(emp)}
+                        >
+                          Pokaż więcej
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {selectedEmployee && <EmployeeDetailsModal onClose={() => setSelectedEmployee(null)} employee={selectedEmployee} />}
             </>
           )}
         </>

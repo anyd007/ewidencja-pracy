@@ -72,6 +72,7 @@ const EmployeeAdd = ({ setEmployeeAdd }) => {
             name="fname"
             placeholder="podaj imię"
             value={firstName}
+            maxLength={15}
             onChange={(e) => setFirstName(e.target.value)}
             required
           />
@@ -84,6 +85,7 @@ const EmployeeAdd = ({ setEmployeeAdd }) => {
             name="lname"
             placeholder="podaj nazwisko"
             value={lastName}
+            maxLength={15}
             onChange={(e) => setLastName(e.target.value)}
             required
           />

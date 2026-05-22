@@ -25,7 +25,7 @@ const AdminSidebar = () => {
       {/* SIDEBAR */}
       <aside className={`admin-sidebar ${isOpen ? "open" : ""}`}>
         <div className="logo">
-          Ewidencja<span>Pracy</span>
+          Remont<span>ER</span>
         </div>
 
         <nav>
