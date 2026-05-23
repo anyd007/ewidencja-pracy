@@ -19,7 +19,7 @@ const EmployeeAdd = ({ setEmployeeAdd }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Walidacja: upewniamy się, że PIN ma dokładnie 4 cyfry
-    if (pin.length !== 4 || isNaN(pin)) {
+    if (pin && pin.length !== 4) {
       setModalConfig({
         message: "Pin musi składać się z dokładnie 4 cyfr.",
         type: "error",
@@ -97,6 +97,7 @@ const EmployeeAdd = ({ setEmployeeAdd }) => {
             id="pin"
             name="pin"
             placeholder="podaj 4-cyfrowy pin"
+            minLength={4}
             maxLength={4}
             value={pin}
             onChange={(e) => setPin(e.target.value.replace(/\D/g, ""))}
