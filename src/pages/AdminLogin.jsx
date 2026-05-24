@@ -1,11 +1,7 @@
 import React, { useState } from "react";
-import {
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-} from "firebase/auth";
-import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
-
+import { signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
+import { auth } from "../firebase";
 import InfoModal from "../components/InfoModal";
 import "../styles/AdminLogin.scss";
 
@@ -13,12 +9,12 @@ const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const navigate = useNavigate();
+
   const [modalConfig, setModalConfig] = useState({
     message: "",
     type: "",
   });
-
-  const navigate = useNavigate();
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -31,7 +27,10 @@ const AdminLogin = () => {
         type: "success",
       });
 
-      navigate("/admin/dashboard");
+      setTimeout(() => {
+        navigate("/admin/dashboard");
+      }, 2500);
+
     } catch (error) {
       setModalConfig({
         message: "Nieprawidłowy email lub hasło",
@@ -39,6 +38,8 @@ const AdminLogin = () => {
       });
     }
   };
+
+  
 
   const handleResetPassword = async () => {
   if (!email) {

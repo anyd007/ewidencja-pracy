@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { db } from "../firebase";
 import { doc, updateDoc } from "firebase/firestore";
+import EmployeeDeleteModal from "./EmployeeDeleteModal";
 import Loader from "./Loader";
 import InfoModal from "./InfoModal";
 import "../styles/EmployeeDetailsModal.scss";
@@ -13,6 +14,7 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
   });
   const [isEdit, setIsEdit] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isDelete, setIsDelete] = useState(false);
   const [modalConfig, setModalConfig] = useState({
     message: "",
     type: "",
@@ -21,6 +23,11 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
   const handleEdit = () => {
     setIsEdit(true);
   };
+
+  const handleDelete = () =>{
+    setIsDelete(true)
+    
+  }
 
   const handleSaveEdit = async () => {
     // Walidacja: upewniamy się, że PIN ma dokładnie 4 cyfry
@@ -52,7 +59,7 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
         type: "success",
       });
     } catch (error) {
-      console.error("Błąd podczas dodawania pracownika:", error);
+      console.error("Błąd podczas wprowadzania zmian:", error);
       setModalConfig({
         message: "Wystąpił błąd podczas wprowadzania zmian",
         type: "error",
@@ -69,6 +76,8 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
         type={modalConfig.type}
         onClose={() => setModalConfig({ message: "", type: "" })}
       />
+      {isDelete && <EmployeeDeleteModal employee={employee}/>}
+
       {loading && <Loader message="Zmiana danych pracownika..." />}
       <div className="details">
         <div className="details-card">
@@ -95,7 +104,7 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
                 <button className="employee-btns__edit" onClick={handleEdit}>
                   edytuj dane
                 </button>
-                <button className="employee-btns__del">usuń pracownika</button>
+                <button className="employee-btns__del" onClick={handleDelete}>usuń pracownika</button>
               </div>
             </>
           ) : (

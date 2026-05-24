@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import { auth, db } from "./firebase";
-import { doc, getDoc } from "firebase/firestore";
+
+import { AuthProvider, useAuth } from "./context/AuthContext";
 
 import EmployeePanel from "./pages/EmployeePanel";
 import AdminPanel from "./pages/AdminPanel";
@@ -10,87 +10,53 @@ import Loader from "./components/Loader";
 
 import "./styles/App-container.scss";
 
-function App() {
-  const [user, setUser] = useState(null);
-  const [role, setRole] = useState(null);
-  const [loading, setLoading] = useState(true);
+// Poprawiony komponent chroniący ścieżki admina
+const AdminRoute = ({ children }) => {
+  const { user, loading, role } = useAuth(); // Usunięto nieistniejące isAdmin
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
-      if (!currentUser) {
-        setUser(null);
-        setRole(null);
-        setLoading(false);
-        return;
-      }
-
-      try {
-        const docRef = doc(db, "users", currentUser.uid);
-        const snap = await getDoc(docRef);
-
-        const userRole = snap.exists() ? snap.data().role : null;
-
-        setUser(currentUser);
-        setRole(userRole);
-      } catch (error) {
-        console.error("Role fetch error:", error);
-        setUser(null);
-        setRole(null);
-      }
-
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  // 1. Czekamy na załadowanie stanu Auth z Firebase
   if (loading) {
-    return <Loader message="Inicjalizacja aplikacji..." />;
+    return <Loader message="Sprawdzanie dostępu..." />;
   }
 
-  // 2. Jeśli user się zalogował, ale wciąż czekamy na pobranie roli z Firestore, blokujemy renderowanie tras
-  if (user && role === null) {
-    return <Loader message="Sprawdzanie uprawnień..." />;
+  // Sprawdzamy, czy użytkownik jest zalogowany oraz czy jego rola to admin/owner
+  const hasAdminAccess = role === "admin" || role === "owner";
+
+  if (!user || !hasAdminAccess) {
+    // Jeśli nie ma uprawnień, wyrzuć do ekranu logowania
+    return <Navigate to="/admin" replace />;
   }
-  
+
+  // Jeśli wszystko jest ok, wyświetlamy zawartość (AdminPanel)
+  return children;
+};
+
+function App() {
   return (
     <Router>
-      <div className="app-container">
-        <Routes>
-          {/* 👷 kiosk pracownika */}
-          <Route path="/" element={<EmployeePanel />} />
+      <AuthProvider>
+        <div className="app-container">
+          <Routes>
+            {/* 👷 kiosk pracownika */}
+            <Route path="/" element={<EmployeePanel />} />
 
-         
+            {/* 🔐 login admin */}
+            <Route path="/admin" element={<AdminLogin />} />
 
-          {/* 🔐 admin login - jeśli zalogowany i ma rolę, przekieruj od razu do dashboardu */}
-          <Route 
-            path="/admin" 
-            element={
-              user && (role === "owner" || role === "admin") ? (
-                <Navigate to="/admin/dashboard/*" replace />
-              ) : (
-                <AdminLogin/>
-              )
-            } 
-          />
+            {/* 🧑‍💼 panel admin (chroniony rolą) */}
+            <Route
+              path="/admin/dashboard/*"
+              element={
+                <AdminRoute>
+                  <AdminPanel />
+                </AdminRoute>
+              }
+            />
 
-          {/* 🧑‍💼 admin panel (ZABEZPIECZONY ROLE) - TYLKO JEDEN ROUTE */}
-          <Route
-            path="/admin/dashboard/*"
-            element={
-              user && (role === "owner" || role === "admin") ? (
-                <AdminPanel user={user}/>
-              ) : (
-                <Navigate to="/admin" replace />
-              )
-            }
-          />
-
-          {/* fallback */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </div>
+            {/* fallback */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </div>
+      </AuthProvider>
     </Router>
   );
 }
