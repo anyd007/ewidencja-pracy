@@ -4,7 +4,7 @@ import { Routes, Route } from "react-router-dom";
 import AdminSidebar from "../components/AdminSidebar";
 import AdminDashboard from "./AdminDashboard";
 import AdminEmployees from "./AdminEmployees";
-import AdminWorkplaces from "./AdminWorkplaces";
+import AdminWorkplaces from "./admin_workplaces/AdminWorkplaces";
 import AdminTimeEntries from "./AdminTimeEntries";
 import AdminSettings from "./AdminSettings";
 

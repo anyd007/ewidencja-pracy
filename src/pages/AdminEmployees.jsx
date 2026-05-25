@@ -4,8 +4,8 @@ import { db } from "../firebase";
 import { collection, query, where, onSnapshot } from "firebase/firestore";
 import "../styles/AdminEmployees.scss";
 import Loader from "../components/Loader";
-import EmployeeAdd from "./EmployeeDetails/EmployeeAdd";
-import EmployeeDetailsModal from "../components/EmployeeDetailsModal";
+import EmployeeAdd from "./employeeDetails/EmployeeAdd";
+import EmployeeDetailsModal from "./employeeDetails/EmployeeDetailsModal";
 import WorkerImg from "../assets/worker-img.png"
 
 const AdminEmployees = () => {

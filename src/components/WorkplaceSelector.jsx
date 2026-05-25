@@ -1,27 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { db } from '../firebase';
+import React from 'react';
+import { useWorkplaces } from "../hooks/useWorkplaces";
 import Loader from './Loader'; // 1. Zaimportuj swój nowy Loader
 import '../styles/WorkplaceSelector.scss';
 
 const WorkplaceSelector = ({ employee, onSelect, onBack }) => {
-  const [workplaces, setWorkplaces] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { workplaces, loading } = useWorkplaces();
 
-  useEffect(() => {
-    const unsubscribe = db
-      .collection("workplaces")
-      .where("isActive", "==", true)
-      .onSnapshot((snapshot) => {
-        const list = snapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        setWorkplaces(list);
-        setLoading(false);
-      });
-
-    return () => unsubscribe();
-  }, []);
 
   if (loading) return <Loader message="Wczytywanie strony..." />;
 

@@ -39,14 +39,7 @@
    HEADER
 ========================= */
 .employee-add h2 {
-  margin: 0;
-
-  font-size: 28px;
-  font-weight: 700;
-
-  color: #1e293b;
-  letter-spacing: -0.5px;
-
+  
   @include mobile {
     font-size: 22px;
     text-align: center;

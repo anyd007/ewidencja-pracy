@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { doc, updateDoc } from "firebase/firestore";
 import EmployeeDeleteModal from "./EmployeeDeleteModal";
-import Loader from "./Loader";
-import InfoModal from "./InfoModal";
-import "../styles/EmployeeDetailsModal.scss";
+import Loader from "../../components/Loader";
+import InfoModal from "../../components/InfoModal";
+import "../../styles/EmployeeDetailsModal.scss";
 const EmployeeDetailsModal = ({ employee, onClose }) => {
   const [editData, setEditData] = useState({
     firstName: employee.firstName,
@@ -26,6 +26,7 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
 
   const handleDelete = () =>{
     setIsDelete(true)
+  
     
   }
 

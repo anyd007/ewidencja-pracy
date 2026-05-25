@@ -1,8 +1,7 @@
 
-import { auth } from "../firebase";
-import "../styles/EmployeeDeleteModal.scss";
+
+import "../../styles/EmployeeDeleteModal.scss";
 const EmployeeDeleteModal = ({employee}) => {
-    console.log(auth);
     return ( 
         <div className="delete-modal">
             <h2>usuwanie pracownika: {employee.firstName} {employee.lastName}</h2>

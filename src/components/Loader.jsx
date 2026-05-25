@@ -2,7 +2,7 @@ import React from 'react';
 import { ClipLoader } from 'react-spinners';
 import '../styles/Loader.scss';
 
-const Loader = ({ message = "Loading..." }) => {
+const Loader = ({ message = "Pobieranie danych..." }) => {
   return (
     <div className="loader-overlay">
       <div className="loader-content">
