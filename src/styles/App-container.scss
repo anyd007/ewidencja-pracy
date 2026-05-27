@@ -18,6 +18,24 @@ body {
 button {
 
   font-family: inherit;
+  background: linear-gradient(135deg, #6366f1, #4f46e5);
+  color: #fff;
+  box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+  text-decoration: none;
+  text-transform: uppercase;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: 0.2s ease;
+  cursor: pointer;
+  transition: all 0.2 linear;
+
+  &:hover {
+    transform: translateY(-2px);
+    opacity: 0.92;
+  }
 }
 
 h1,
@@ -300,12 +318,130 @@ h2 {
     }
   }
 }
+
 @keyframes fadeIn {
-    from {
-        opacity: 0;
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* =========================
+  EDIT MODAL STYLES
+========================= */
+.edit-wrapper {
+  width: 100%;
+  max-width: 520px;
+  animation: fadeIn 0.25s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  padding: 1.2rem;
+  background: #ffffff;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+
+  h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #111827;
+    text-align: center;
+  }
+
+  label {
+    display: block;
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-bottom: 0.4rem;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.7rem 0.9rem;
+    border-radius: 10px;
+    border: 1px solid #e5e7eb;
+    font-size: 0.95rem;
+    outline: none;
+    transition: 0.2s ease;
+
+    &:focus {
+      border-color: #6366f1;
+      box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+    }
+  }
+
+  /* 📱 MOBILE */
+  @include mobile {
+    padding: 1rem;
+    gap: 1rem;
+
+    h2 {
+      font-size: 1rem;
     }
 
-    to {
-        opacity: 1;
+    input {
+      font-size: 0.85rem;
+      padding: 0.65rem 0.75rem;
     }
+  }
+
+  /* 📱 TABLET */
+  @include tablet {
+    padding: 1.1rem;
+  }
+}
+
+/* SEKCJE INPUTÓW */
+.edit {
+  display: flex;
+  flex-direction: column;
+}
+
+/* PRZYCISKI */
+.edit-btns {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 0.5rem;
+
+  button {
+    flex: 1;
+    padding: 0.7rem 1rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+  }
+
+  &__save {
+    background: linear-gradient(135deg, #6366f1, #4f46e5);
+    color: #fff;
+
+    &:hover {
+      transform: translateY(-1px);
+      background: linear-gradient(135deg, #4f46e5, #3730a3);
+    }
+  }
+
+  &__exit {
+    background: #f3f4f6;
+    color: #374151;
+
+    &:hover {
+      background: #e5e7eb;
+    }
+  }
+
+  /* 📱 MOBILE - przyciski pod sobą */
+  @include mobile {
+    flex-direction: column;
+
+    button {
+      width: 100%;
+    }
+  }
 }

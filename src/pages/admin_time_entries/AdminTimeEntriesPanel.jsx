@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { db } from "../firebase";
+import { db } from "../../firebase";
 import { collection, query, onSnapshot } from "firebase/firestore";
-import Loader from "../components/Loader";
-import "../styles/AdminTimeEntries.scss";
+import Loader from "../../components/Loader";
+import "../../styles/AdminTimeEntriesPanel.scss";
 
 const AdminTimeEntries = () => {
   const [details, setDetails] = useState([]);
@@ -11,6 +11,7 @@ const AdminTimeEntries = () => {
   const [to, setTo] = useState("");
   const [selectedWorkplace, setSelectedWorkplace] = useState("");
   const [selectedEmployee, setSelectedEmployee] = useState("");
+ 
 
   // 🔥 Firestore - tylko employeeId
   useEffect(() => {
@@ -104,6 +105,11 @@ const AdminTimeEntries = () => {
       {loading && <Loader message="Pobieranie danych pracownika..." />}
 
       <h2>Czas pracy</h2>
+      <button
+        className="add-time-entry-btn"
+      >
+        dodaj wpis
+      </button>
 
       {/* FILTRY ZAWSZE WIDOCZNE */}
       <div className="filters-wrapper">
@@ -122,8 +128,15 @@ const AdminTimeEntries = () => {
             onChange={(e) => setTo(e.target.value)}
           />
 
-          <button className="reset-btn"
-          onClick={() => { setFrom(""); setTo(""); }}>reset dat</button>
+          <button
+            className="reset-btn"
+            onClick={() => {
+              setFrom("");
+              setTo("");
+            }}
+          >
+            reset dat
+          </button>
         </div>
 
         <div className="filters-pleace">

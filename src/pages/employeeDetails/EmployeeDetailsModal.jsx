@@ -43,12 +43,13 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
     setLoading(true);
 
     try {
-      await updateDoc(doc(db, "employees", employee.id), {
+      const ref = doc(db, "employees", employee.id);
+
+      await updateDoc(ref, {
         firstName: editData.firstName.trim(),
         lastName: editData.lastName.trim(),
         pin: editData.pin,
         updatedAt: new Date().toISOString(),
-        isActive: true,
       });
 
       setTimeout(() => {
@@ -111,13 +112,13 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
           ) : (
             <div className="edit-wrapper">
               <h2>edytuj dane</h2>
-              <div className="edit-first-name">
-                <label htmlFor="fname">zmień imię: {employee.firstName}</label>
+              <div className="edit first-name">
+                <label htmlFor="fname">Aktualne imie:</label>
                 <input
                   type="text"
                   id="fname"
                   name="fname"
-                  placeholder="zmień imię..."
+                  placeholder={employee?.firstName ? `Aktualnie: ${employee.firstName}` : "Podaj imię..."}
                   maxLength={15}
                   value={editData.firstName}
                   onChange={(e) =>
@@ -125,15 +126,13 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
                   }
                 />
               </div>
-              <div className="edit-last-name">
-                <label htmlFor="lname">
-                  zmień nazwisko: {employee.lastName}
-                </label>
+              <div className="edit last-name">
+                <label htmlFor="lname">Aktualne nazwisko:</label>
                 <input
                   type="text"
                   id="lname"
                   name="lname"
-                  placeholder="zmień nazwisko..."
+                  placeholder={employee?.lastName ? `Aktualnie: ${employee.lastName}` : "Podaj nazwisko..."}
                   maxLength={15}
                   value={editData.lastName}
                   onChange={(e) =>
@@ -141,13 +140,13 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
                   }
                 />
               </div>
-              <div className="edit-pin">
-                <label htmlFor="pin">zmiń PIN</label>
+              <div className="edit pin">
+                <label htmlFor="pin">Aktualny PIN:</label>
                 <input
                   type="text"
                   id="pin"
                   name="pin"
-                  placeholder="zmień pin..."
+                  placeholder={employee?.pin ? `Aktualnie: ${employee.pin}` : "Podaj pin..."}
                   minLength={4}
                   maxLength={4}
                   required
@@ -160,15 +159,13 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
                   }
                 />
               </div>
-              <div className="edit-phone">
-                <label htmlFor="phone">zmień telefon</label>
+              <div className="edit phone">
+                <label htmlFor="phone">Aktualny nr telefonu:(opcjonalnie)</label>
                 <input
                   type="text"
                   id="phone"
                   name="phone"
-                  placeholder={
-                    editData.phone ? "zmień telefon..." : "dodaj nr telefonu..."
-                  }
+                  placeholder={employee?.phone ? `Aktualnie: ${employee.phone}`: "Brak numeru..."}
                   maxLength={15}
                   value={editData.phone}
                   onChange={(e) =>

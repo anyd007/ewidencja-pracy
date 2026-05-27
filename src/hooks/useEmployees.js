@@ -7,31 +7,30 @@ import {
   onSnapshot,
 } from "firebase/firestore";
 
-export const useWorkplaces = () => {
-  const [workplaces, setWorkplaces] = useState([]);
+export const useEmployees = () => {
+  const [employees, setEmployees] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const q = query(
-      collection(db, "workplaces"),
+      collection(db, "employees"),
       where("isActive", "==", true)
     );
 
     const handleSuccess = (snapshot) => {
-      const workplacesList = snapshot.docs.map((doc) => ({
+      const employeesList = snapshot.docs.map((doc) => ({
         id: doc.id,
         ...doc.data(),
       }));
 
-      setWorkplaces(workplacesList);
+      setEmployees(employeesList);
       setLoading(false);
     };
 
-    const handleError = (err) => {
-      console.error("Błąd pobierania miejsc pracy:", err);
-
-      setError(err.message);
+    const handleError = (error) => {
+      console.error(error);
+      setError(error);
       setLoading(false);
     };
 
@@ -44,9 +43,10 @@ export const useWorkplaces = () => {
     return () => unsubscribe();
 
   }, []);
+
   return {
-    workplaces,
+    employees,
     loading,
     error,
-  }
+  };
 };

@@ -5,7 +5,7 @@ import AdminSidebar from "../components/AdminSidebar";
 import AdminDashboard from "./AdminDashboard";
 import AdminEmployees from "./AdminEmployees";
 import AdminWorkplaces from "./admin_workplaces/AdminWorkplaces";
-import AdminTimeEntries from "./AdminTimeEntries";
+import AdminTimeEntries from "./admin_time_entries/AdminTimeEntriesPanel";
 import AdminSettings from "./AdminSettings";
 
 import "../styles/AdminPanel.scss";
