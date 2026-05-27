@@ -12,7 +12,9 @@ const AddWorkplace = ({ onClose }) => {
   });
   const [newWorkplace, setNewWorkplace] = useState({
     name: "",
-    address: "",
+    city: "",
+    street: "",
+    number: "",
   });
 
  const handleSubmit = async (e) => {
@@ -31,12 +33,19 @@ const AddWorkplace = ({ onClose }) => {
   try {
     await addDoc(collection(db, "workplaces"), {
       name: newWorkplace.name.trim(),
-      address: newWorkplace.address.trim(),
+      city: newWorkplace.city.trim(),
+      street: newWorkplace.street.trim(),
+      number: newWorkplace.number,
       isActive: true,
       createdAt: new Date().toISOString(),
     });
 
-    setNewWorkplace({ name: "", address: "" });
+    setNewWorkplace({ 
+        name: "", 
+        city: "",
+        street: "",
+        number: "",
+    });
 
     setModalConfig({
       message: "miejsce pracy dodane pomyślnie",
@@ -89,18 +98,46 @@ const AddWorkplace = ({ onClose }) => {
             required
           />
         </div>
-        <div className="add-workplace-wrapper__address">
-          <label htmlFor="address">adres miejsca pracy</label>
+        <div className="add-workplace-wrapper__city">
+          <label htmlFor="city">podaj miasto (opcjonalnie)</label>
           <input
             type="text"
-            id="address"
-            name="address"
-            placeholder="podaj adres..."
-            value={newWorkplace.address}
+            id="city"
+            name="city"
+            placeholder="podaj miasto..."
+            value={newWorkplace.city}
             onChange={(e) =>
-              setNewWorkplace({ ...newWorkplace, address: e.target.value })
+              setNewWorkplace({ ...newWorkplace, city: e.target.value })
             }
-            maxLength={40}
+            maxLength={20}
+          />
+        </div>
+        <div className="add-workplace-wrapper__street">
+          <label htmlFor="street">podaj ulicę (opcjonalnie)</label>
+          <input
+            type="text"
+            id="street"
+            name="street"
+            placeholder="podaj ulicę..."
+            value={newWorkplace.street}
+            onChange={(e) =>
+              setNewWorkplace({ ...newWorkplace, street: e.target.value })
+            }
+            maxLength={30}
+          />
+        </div>
+        <div className="add-workplace-wrapper__number">
+          <label htmlFor="number">podaj nr budynku (opcjonalnie)</label>
+          <input
+            type="text"
+            id="number"
+            name="number"
+            placeholder="podaj nr budynku..."
+            value={newWorkplace.number}
+            onChange={(e) =>
+              setNewWorkplace({ ...newWorkplace, number: e.target.value })
+            }
+            maxLength={20}
           />
         </div>
         <button className="add-workplace-wrapper__save-btn" type="submit">

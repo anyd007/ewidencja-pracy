@@ -6,6 +6,7 @@
 ========================= */
 
 .admin-sidebar {
+  position: relative;
   width: 260px;
   min-height: 100vh;
 
@@ -102,9 +103,13 @@ nav a {
 
   font-size: 24px;
   padding: 6px 10px;
-
+  transition: all 0.3s ease;
   cursor: pointer;
 }
+
+ .burger.open {
+    left: 220px;
+  }
 
 @media (min-width: 769px) {
   .burger {
@@ -130,10 +135,7 @@ nav a {
   z-index: 1001;
 }
 
-.sidebar-overlay.show {
-  opacity: 1;
-  pointer-events: all;
-}
+
 
 /* =========================
    MOBILE SLIDE MENU
@@ -150,6 +152,11 @@ nav a {
 
     transform: translateX(-100%);
   }
+
+  .sidebar-overlay.show {
+  opacity: 1;
+  pointer-events: all;
+}
 
   .admin-sidebar.open {
     transform: translateX(0);

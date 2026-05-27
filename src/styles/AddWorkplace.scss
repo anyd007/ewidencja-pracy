@@ -78,7 +78,9 @@
         }
 
         &__name,
-        &__address {
+        &__city,
+        &__street,
+        &__number {
             display: flex;
             flex-direction: column;
             gap: 8px;

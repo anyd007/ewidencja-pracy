@@ -12,7 +12,7 @@ const AdminSidebar = () => {
   return (
     <>
       {/* BURGER */}
-      <button className="burger" onClick={toggleMenu}>
+      <button className={`burger ${isOpen ? "open" : ""}`} onClick={toggleMenu}>
         ☰
       </button>
 

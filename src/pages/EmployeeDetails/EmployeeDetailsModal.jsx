@@ -71,7 +71,7 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
   };
 
   return (
-    <div className="employee-details-modal">
+    <div className="details-wrapper">
       <InfoModal
         message={modalConfig.message}
         type={modalConfig.type}
@@ -89,23 +89,23 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
                 {employee.firstName} {employee.lastName}
               </div>
 
-              <div className="employee-field">
+              <div className="details-field">
                 <span>PIN</span>
                 <span>{employee.pin}</span>
               </div>
 
-              <div className="employee-field">
+              <div className="details-field">
                 <span>Telefon</span>
                 <span>{employee.phone || "brak danych"}</span>
               </div>
-              <div className="employee-btns">
-                <button className="employee-btns__exit" onClick={onClose}>
+              <div className="details-btns">
+                <button className="details-btns__exit" onClick={onClose}>
                   zamknij
                 </button>
-                <button className="employee-btns__edit" onClick={handleEdit}>
+                <button className="details-btns__edit" onClick={handleEdit}>
                   edytuj dane
                 </button>
-                <button className="employee-btns__del" onClick={handleDelete}>usuń pracownika</button>
+                <button className="details-btns__del" onClick={handleDelete}>usuń pracownika</button>
               </div>
             </>
           ) : (
