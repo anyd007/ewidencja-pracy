@@ -14,7 +14,7 @@ const AdminWorkplaceDetails = ({ workplace, onClose }) => {
           </div>
           <div className="details-field">
             <span>ULICA</span>
-            <span>{workplace.street}, {workplace.number}</span>
+            <span>{workplace.street}  {workplace.number}</span>
           </div>
           <div className="details-btns">
             <button className="details-btns__exit" onClick={onClose}>

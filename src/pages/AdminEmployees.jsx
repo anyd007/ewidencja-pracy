@@ -93,7 +93,7 @@ const AdminEmployees = () => {
                           className="employee-card__button"
                           onClick={() => handleEmployeeChoose(emp)}
                         >
-                          Pokaż więcej
+                          Pokaż więcej...
                         </button>
                       </div>
                     </div>
