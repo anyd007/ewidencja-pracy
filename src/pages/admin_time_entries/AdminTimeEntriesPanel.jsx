@@ -3,6 +3,7 @@ import { db } from "../../firebase";
 import { collection, query, onSnapshot } from "firebase/firestore";
 import Loader from "../../components/Loader";
 import "../../styles/AdminTimeEntriesPanel.scss";
+import TimeEntryChooseWorkplace from "./admin_time_entries_steps/TimeEntryChooseWorkplace";
 
 const AdminTimeEntries = () => {
   const [details, setDetails] = useState([]);
@@ -11,7 +12,7 @@ const AdminTimeEntries = () => {
   const [to, setTo] = useState("");
   const [selectedWorkplace, setSelectedWorkplace] = useState("");
   const [selectedEmployee, setSelectedEmployee] = useState("");
- 
+  const [mode, setMode] = useState("list");
 
   // 🔥 Firestore - tylko employeeId
   useEffect(() => {
@@ -100,117 +101,128 @@ const AdminTimeEntries = () => {
 
   const hasData = filteredDetails.length > 0;
 
+  const handleCloseAddModal = () => {
+    setMode("list");
+  };
+
   return (
     <div className="time-entries">
-      {loading && <Loader message="Pobieranie danych pracownika..." />}
+      {mode === "add" && <TimeEntryChooseWorkplace onClose={handleCloseAddModal}/>}
 
-      <h2>Czas pracy</h2>
-      <button
-        className="add-time-entry-btn"
-      >
-        dodaj wpis
-      </button>
+      {mode === "list" && (
+        <>
+          {loading && <Loader message="Pobieranie danych pracownika..." />}
 
-      {/* FILTRY ZAWSZE WIDOCZNE */}
-      <div className="filters-wrapper">
-        <div className="filters-date">
-          <input
-            className="filters-input"
-            type="date"
-            value={from}
-            onChange={(e) => setFrom(e.target.value)}
-          />
-
-          <input
-            className="filters-input"
-            type="date"
-            value={to}
-            onChange={(e) => setTo(e.target.value)}
-          />
-
+          <h2>Czas pracy</h2>
           <button
-            className="reset-btn"
-            onClick={() => {
-              setFrom("");
-              setTo("");
-            }}
+            className="add-time-entry-btn"
+            onClick={() => setMode("add")}
           >
-            reset dat
+            dodaj wpis
           </button>
-        </div>
 
-        <div className="filters-pleace">
-          <div className="filters-group">
-            <label>Miejsce pracy</label>
+          {/* FILTRY ZAWSZE WIDOCZNE */}
+          <div className="filters-wrapper">
+            <div className="filters-date">
+              <input
+                className="filters-input"
+                type="date"
+                value={from}
+                onChange={(e) => setFrom(e.target.value)}
+              />
 
-            <select
-              className="filter-pleace-select"
-              value={selectedWorkplace}
-              onChange={(e) => setSelectedWorkplace(e.target.value)}
-            >
-              <option value="">Wszystkie miejsca</option>
+              <input
+                className="filters-input"
+                type="date"
+                value={to}
+                onChange={(e) => setTo(e.target.value)}
+              />
 
-              {workplaces.map((w) => (
-                <option key={w.id} value={w.id}>
-                  {w.name}
-                </option>
-              ))}
-            </select>
+              <button
+                className="reset-btn"
+                onClick={() => {
+                  setFrom("");
+                  setTo("");
+                }}
+              >
+                reset dat
+              </button>
+            </div>
+
+            <div className="filters-pleace">
+              <div className="filters-group">
+                <label>Miejsce pracy</label>
+
+                <select
+                  className="filter-pleace-select"
+                  value={selectedWorkplace}
+                  onChange={(e) => setSelectedWorkplace(e.target.value)}
+                >
+                  <option value="">Wszystkie miejsca</option>
+
+                  {workplaces.map((w) => (
+                    <option key={w.id} value={w.id}>
+                      {w.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              <div className="filters-group">
+                <label>Pracownicy</label>
+
+                <select
+                  className="filter-pleace-select"
+                  value={selectedEmployee}
+                  onChange={(e) => setSelectedEmployee(e.target.value)}
+                >
+                  <option value="">Wszyscy pracownicy</option>
+
+                  {employees.map((emp) => (
+                    <option key={emp.id} value={emp.id}>
+                      {emp.firstName} {emp.lastName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
           </div>
 
-          <div className="filters-group">
-            <label>Pracownicy</label>
+          {/* STANY DANYCH */}
+          {!loading && details.length === 0 ? (
+            <p>Brak danych do wyświetlenia</p>
+          ) : !loading && !hasData ? (
+            <h3>Brak danych w wybranym zakresie</h3>
+          ) : (
+            <div className="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Imię Nazwisko</th>
+                    <th>Miejsce pracy</th>
+                    <th>Data</th>
+                    <th>Godziny Od - Do</th>
+                  </tr>
+                </thead>
 
-            <select
-              className="filter-pleace-select"
-              value={selectedEmployee}
-              onChange={(e) => setSelectedEmployee(e.target.value)}
-            >
-              <option value="">Wszyscy pracownicy</option>
-
-              {employees.map((emp) => (
-                <option key={emp.id} value={emp.id}>
-                  {emp.firstName} {emp.lastName}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-      </div>
-
-      {/* STANY DANYCH */}
-      {!loading && details.length === 0 ? (
-        <p>Brak danych do wyświetlenia</p>
-      ) : !loading && !hasData ? (
-        <h3>Brak danych w wybranym zakresie</h3>
-      ) : (
-        <div className="table-wrapper">
-          <table>
-            <thead>
-              <tr>
-                <th>Imię Nazwisko</th>
-                <th>Miejsce pracy</th>
-                <th>Data</th>
-                <th>Godziny Od - Do</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {filteredDetails.map((detail) => (
-                <tr key={detail.id}>
-                  <td>
-                    {detail.firstName} {detail.lastName}
-                  </td>
-                  <td>{detail.workplaceName}</td>
-                  <td>{detail.date}</td>
-                  <td>
-                    {detail.startTime} - {detail.endTime}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+                <tbody>
+                  {filteredDetails.map((detail) => (
+                    <tr key={detail.id}>
+                      <td>
+                        {detail.firstName} {detail.lastName}
+                      </td>
+                      <td>{detail.workplaceName}</td>
+                      <td>{detail.date}</td>
+                      <td>
+                        {detail.startTime} - {detail.endTime}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </>
       )}
     </div>
   );

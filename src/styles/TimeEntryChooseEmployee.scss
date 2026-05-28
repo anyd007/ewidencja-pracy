@@ -1,0 +1,16 @@
+@use "./mixins" as *;
+
+.employees {
+
+    h3 {
+        color: #fff;
+        text-transform: uppercase;
+        margin: 2rem auto;
+    }
+}
+.full-name{
+    color: #000 !important;
+}
+.back-btn{
+    margin-top: 2rem;
+}
