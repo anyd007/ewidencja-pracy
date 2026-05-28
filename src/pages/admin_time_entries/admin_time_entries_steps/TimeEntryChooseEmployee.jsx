@@ -11,11 +11,23 @@ const TimeEntryChooseEmployee = ({
   const { employees, loading } = useEmployees();
   const [search, setSearch] = useState("");
 
+  
+
   const filteredEmployees = employees.filter((emp) =>
     `${emp.firstName} ${emp.lastName}`
       .toLowerCase()
       .includes(search.trim().toLowerCase()),
   );
+
+  const resetWorkplace = () => {
+  setNewTimeEntry((prev) => ({
+    ...prev,
+    workplaceId: "",
+    workplaceName: "",
+  }));
+
+  setMode("workplace");
+};
 
 
   return (
@@ -40,16 +52,25 @@ const TimeEntryChooseEmployee = ({
 
             <div className="employee-card__content">
               <h3 className="employee-card__name full-name">
-                {emp.firstName} {emp.lastName}
+                {emp.firstName} {emp.lastName} 
               </h3>
 
-              <button className="employee-card__button">wybierz...</button>
+              <button className="employee-card__button"
+              onClick={() =>{
+                setNewTimeEntry((prev) =>({
+                    ...prev,
+                    employeeId: emp.id,
+                    firstName: emp.firstName,
+                    lastName: emp.lastName,
+                }))
+                setMode("date")
+              }}>wybierz...</button>
             </div>
           </div>
         ))}
       </div>
 
-      <button className="back-btn" onClick={() => setMode("workplace")}>
+      <button className="back-btn" onClick={resetWorkplace}>
         wróć do wyboru miejsca
       </button>
     </div>

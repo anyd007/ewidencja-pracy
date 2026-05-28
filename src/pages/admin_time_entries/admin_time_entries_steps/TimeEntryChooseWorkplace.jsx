@@ -3,6 +3,7 @@ import { useWorkplaces } from "../../../hooks/useWorkplaces";
 import Loader from "../../../components/Loader";
 import "../../../styles/TimeEntryChooseWorkplace.scss";
 import TimeEntryChooseEmployee from "./TimeEntryChooseEmployee";
+import TimeEntryChooseDate from "./TimeEntryChooseDate";
 const TimeEntryChooseWorkplace = ({ onClose }) => {
   const { workplaces, loading } = useWorkplaces();
   const [search, setSearch] = useState("");
@@ -11,8 +12,8 @@ const TimeEntryChooseWorkplace = ({ onClose }) => {
     workplaceName: "",
     workplaceId: "",
     employeeId: "",
-    employeeFirstName: "",
-    employeeLastName: "",
+    firstName: "",
+    lastName: "",
     startTime: "",
     endTime: "",
     date: "",
@@ -21,14 +22,13 @@ const TimeEntryChooseWorkplace = ({ onClose }) => {
   const filteredWorkplaces = workplaces.filter((wp) =>
     wp.name.toLowerCase().includes(search.trim().toLowerCase()),
   );
+
+  console.log(newTimeEntry);
   return (
     <div className="add add-time-entries">
       {loading && <Loader message="Pobieranie danych..." />}
       <div className="add-wrapper">
         <h2 className="add-wrapper__title">Dodaj wpis czasu pracy</h2>
-        <button className="add-wrapper__close-btn" onClick={onClose}>
-          zamknij
-        </button>
 
         {/* STEP 1 */}
         {mode === "workplace" && (
@@ -61,12 +61,24 @@ const TimeEntryChooseWorkplace = ({ onClose }) => {
                 </div>
               ))}
             </div>
+             <button className="add-wrapper__close-btn" onClick={onClose}>
+          zamknij
+        </button>
           </div>
         )}
 
         {/* STEP 2 */}
         {mode === "employee" && (
           <TimeEntryChooseEmployee
+            newTimeEntry={newTimeEntry}
+            setNewTimeEntry={setNewTimeEntry}
+            setMode={setMode}
+          />
+        )}
+
+        {/* STEP 3 */}
+        {mode === "date" && (
+          <TimeEntryChooseDate
             newTimeEntry={newTimeEntry}
             setNewTimeEntry={setNewTimeEntry}
             setMode={setMode}

@@ -1,0 +1,82 @@
+@use "./mixins" as *;
+
+.date-step {
+    width: 100%;
+    max-width: 700px;
+    margin: 0 auto;
+    color: #fff;
+
+    &__title {
+        text-align: center;
+        margin: 1.5rem auto;
+        font-size: 22px;
+        font-weight: 600;
+    }
+
+    &__form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+
+    .field {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        label {
+            font-size: 13px;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            border-radius: 14px;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+            color: #1e293b;
+            font-size: 15px;
+            font-weight: 500;
+            outline: none;
+            transition: border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+
+            &:focus {
+                border-color: #6366f1;
+            }
+        }
+    }
+
+    &__buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 2rem;
+        gap: 1rem;
+
+        @include tablet {
+            flex-direction: column;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+
+            &.back {
+                background: #374151;
+                color: #fff;
+            }
+
+            &.next {
+                background: #6366f1;
+                color: #fff;
+            }
+        }
+    }
+}
