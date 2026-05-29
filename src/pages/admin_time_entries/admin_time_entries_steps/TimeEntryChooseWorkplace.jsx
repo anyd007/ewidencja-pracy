@@ -4,6 +4,7 @@ import Loader from "../../../components/Loader";
 import "../../../styles/TimeEntryChooseWorkplace.scss";
 import TimeEntryChooseEmployee from "./TimeEntryChooseEmployee";
 import TimeEntryChooseDate from "./TimeEntryChooseDate";
+import TimeEntrySummary from "./TimeEntrySummary";
 const TimeEntryChooseWorkplace = ({ onClose }) => {
   const { workplaces, loading } = useWorkplaces();
   const [search, setSearch] = useState("");
@@ -79,6 +80,15 @@ const TimeEntryChooseWorkplace = ({ onClose }) => {
         {/* STEP 3 */}
         {mode === "date" && (
           <TimeEntryChooseDate
+            newTimeEntry={newTimeEntry}
+            setNewTimeEntry={setNewTimeEntry}
+            setMode={setMode}
+          />
+        )}
+
+        {/* STEP 4 */}
+          {mode === "summary" && (
+          <TimeEntrySummary
             newTimeEntry={newTimeEntry}
             setNewTimeEntry={setNewTimeEntry}
             setMode={setMode}

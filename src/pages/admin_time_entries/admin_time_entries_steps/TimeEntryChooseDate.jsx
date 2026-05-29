@@ -16,7 +16,7 @@ const TimesEntryChooseDate = ({ setMode, setNewTimeEntry, onClose }) => {
       endTime,
     }));
 
-    setMode("summary"); // albo np. "save"
+    setMode("summary"); 
   };
 
   const resetEmployee = () => {
