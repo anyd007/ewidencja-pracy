@@ -19,7 +19,7 @@ const EmployeeAdd = ({ setEmployeeAdd }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Walidacja: upewniamy się, że PIN ma dokładnie 4 cyfry
-    if (pin && pin.length !== 4) {
+    if  (!/^\d{4}$/.test(pin)){
       setModalConfig({
         message: "Pin musi składać się z dokładnie 4 cyfr.",
         type: "error",
@@ -30,9 +30,10 @@ const EmployeeAdd = ({ setEmployeeAdd }) => {
     try {
 
       await addDoc(collection(db, "employees"), {
-        firstName: firstName.trim(),
-        lastName: lastName.trim(),
-        pin: pin,
+        firstName: firstName.trim() || "",
+        lastName: lastName.trim() || "",
+        phone: phone.trim() || "",
+        pin: pin.trim() || "",
         createdAt: new Date().toISOString(),
         isActive: true,
       });
@@ -107,11 +108,11 @@ const EmployeeAdd = ({ setEmployeeAdd }) => {
         <div className="employee-add-wrapper__phone">
           <label htmlFor="phone">numer telefonu (opcjonalnie) </label>
           <input
-            type="number"
+            type="text"
             id="phone"
             name="phone"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => setPhone(e.target.value.replace(/\D/g, ""))}
             placeholder="podaj numer tel."
           />
         </div>

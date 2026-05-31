@@ -38,7 +38,7 @@ const AdminTimeEntries = () => {
             <Loader message="Pobieranie danych czasu pracy..." />
           )}
 
-          <h2>Czas pracy</h2>
+          <h2>ewidencja czasu:</h2>
 
           <button
             className="add-time-entry-btn"

@@ -26,7 +26,7 @@ const AdminWorkplaces = () => {
       ) : (
         <div className="workplaces-wrapper">
           <h1 className="workplaces-wrapper__title">
-            Miejsca wykonywanych prac
+            Miejsca pracy:
           </h1>
           <button
             className="workplaces-wrapper__add-btn"

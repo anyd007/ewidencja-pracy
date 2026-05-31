@@ -27,7 +27,7 @@ const AdminEmployees = () => {
             <EmployeeAdd setEmployeeAdd={setEmployeeAdd} />
           ) : (
             <>
-              <h1 className="admin-employees__title">Wszyscy pracownicy</h1>
+              <h1 className="admin-employees__title">pracownicy:</h1>
 
                 <button
                 onClick={() => setEmployeeAdd(true)}

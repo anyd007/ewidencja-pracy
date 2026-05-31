@@ -12,32 +12,45 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
     phone: employee.phone,
     pin: employee.pin,
   });
-  const [isEdit, setIsEdit] = useState(false);
+  const [mode, setMode] = useState("details"); // "details" lub "edit"
   const [loading, setLoading] = useState(false);
-  const [isDelete, setIsDelete] = useState(false);
   const [modalConfig, setModalConfig] = useState({
     message: "",
     type: "",
   });
 
   const handleEdit = () => {
-    setIsEdit(true);
+    setMode("edit");
   };
 
-  const handleDelete = () =>{
-    setIsDelete(true)
-  
-    
-  }
+  const handleDelete = () => {
+    setMode("delete");
+  };
 
   const handleSaveEdit = async () => {
+    console.log(editData);
     // Walidacja: upewniamy się, że PIN ma dokładnie 4 cyfry
-    if (editData.pin && editData.pin.length !== 4) {
+    if (!/^\d{4}$/.test(editData.pin)) {
       setModalConfig({
         message: "Pin musi składać się z dokładnie 4 cyfr.",
         type: "error",
       });
-      setIsEdit(true)
+      setMode("edit");
+      return;
+    }
+    if (!editData.firstName.trim()) {
+      setModalConfig({
+        message: "Imię nie może być puste.",
+        type: "error",
+      });
+      return;
+    }
+
+    if (!editData.lastName.trim()) {
+      setModalConfig({
+        message: "Nazwisko nie może być puste.",
+        type: "error",
+      });
       return;
     }
     setLoading(true);
@@ -48,6 +61,7 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
       await updateDoc(ref, {
         firstName: editData.firstName.trim(),
         lastName: editData.lastName.trim(),
+        phone: editData.phone.trim(),
         pin: editData.pin,
         updatedAt: new Date().toISOString(),
       });
@@ -57,7 +71,7 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
       }, 1200);
 
       setModalConfig({
-        message: "Zmiany wprowadzone poprawinie",
+        message: "Zmiany wprowadzone poprawnie",
         type: "success",
       });
     } catch (error) {
@@ -78,13 +92,18 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
         type={modalConfig.type}
         onClose={() => setModalConfig({ message: "", type: "" })}
       />
-      {isDelete && <EmployeeDeleteModal employee={employee}/>}
+      {mode === "delete" && (
+        <EmployeeDeleteModal
+          employee={employee}
+          onClose={() => setMode("details")}
+        />
+      )}
 
       {loading && <Loader message="Zmiana danych pracownika..." />}
       <div className="details">
         <div className="details-card">
           <h2>Informacje o pracowniku</h2>
-          {!isEdit ? (
+          {mode === "details" && (
             <>
               <div className="employee-name">
                 {employee.firstName} {employee.lastName}
@@ -106,10 +125,14 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
                 <button className="details-btns__edit" onClick={handleEdit}>
                   edytuj dane
                 </button>
-                <button className="details-btns__del" onClick={handleDelete}>usuń pracownika</button>
+                <button className="details-btns__del" onClick={handleDelete}>
+                  usuń pracownika
+                </button>
               </div>
             </>
-          ) : (
+          )}
+
+          {mode === "edit" && (
             <div className="edit-wrapper">
               <h2>edytuj dane</h2>
               <div className="edit first-name">
@@ -118,7 +141,11 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
                   type="text"
                   id="fname"
                   name="fname"
-                  placeholder={employee?.firstName ? `Aktualnie: ${employee.firstName}` : "Podaj imię..."}
+                  placeholder={
+                    employee?.firstName
+                      ? `Aktualnie: ${employee.firstName}`
+                      : "Podaj imię..."
+                  }
                   maxLength={15}
                   value={editData.firstName}
                   onChange={(e) =>
@@ -132,7 +159,11 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
                   type="text"
                   id="lname"
                   name="lname"
-                  placeholder={employee?.lastName ? `Aktualnie: ${employee.lastName}` : "Podaj nazwisko..."}
+                  placeholder={
+                    employee?.lastName
+                      ? `Aktualnie: ${employee.lastName}`
+                      : "Podaj nazwisko..."
+                  }
                   maxLength={15}
                   value={editData.lastName}
                   onChange={(e) =>
@@ -146,7 +177,11 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
                   type="text"
                   id="pin"
                   name="pin"
-                  placeholder={employee?.pin ? `Aktualnie: ${employee.pin}` : "Podaj pin..."}
+                  placeholder={
+                    employee?.pin
+                      ? `Aktualnie: ${employee.pin}`
+                      : "Podaj pin..."
+                  }
                   minLength={4}
                   maxLength={4}
                   required
@@ -160,12 +195,18 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
                 />
               </div>
               <div className="edit phone">
-                <label htmlFor="phone">Aktualny nr telefonu:(opcjonalnie)</label>
+                <label htmlFor="phone">
+                  Aktualny nr telefonu:(opcjonalnie)
+                </label>
                 <input
                   type="text"
                   id="phone"
                   name="phone"
-                  placeholder={employee?.phone ? `Aktualnie: ${employee.phone}`: "Brak numeru..."}
+                  placeholder={
+                    employee?.phone
+                      ? `Aktualnie: ${employee.phone}`
+                      : "Brak numeru..."
+                  }
                   maxLength={15}
                   value={editData.phone}
                   onChange={(e) =>
@@ -177,8 +218,12 @@ const EmployeeDetailsModal = ({ employee, onClose }) => {
                 />
               </div>
               <div className="edit-btns">
-                <button type="button" className="edit-btns__save" onClick={handleSaveEdit}>
-                  zapisz zminay
+                <button
+                  type="button"
+                  className="edit-btns__save"
+                  onClick={handleSaveEdit}
+                >
+                  zapisz zmiany
                 </button>
                 <button className="edit-btns__exit" onClick={onClose}>
                   zamknij bez zmian
